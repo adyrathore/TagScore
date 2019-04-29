@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+<style name="spinner_style" parent="@style/Base.Widget.AppCompat.Spinner.Underlined">
+
+        <item name="android:paddingStart" tools:targetApi="jelly_bean_mr1">0dp</item>
+        <item name="android:paddingEnd" tools:targetApi="jelly_bean_mr1">0dp</item>
+        <item name="android:textColor">@color/common_google_signin_btn_text_dark</item>
+        <item name="android:textSize">12sp</item>
+</style>
+
+</resources>

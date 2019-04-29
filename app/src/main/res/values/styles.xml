@@ -1,8 +1,75 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/white</item>
+
     </style>
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="MyRadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/green</item>
+    </style>
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+        <item name="android:windowContentTransitions" tools:ignore="NewApi">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap" tools:ignore="NewApi">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap" tools:ignore="NewApi">true</item>
+        <item name="android:windowSharedElementEnterTransition" tools:ignore="NewApi">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition" tools:ignore="NewApi">@android:transition/move</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14dp</item>
+
+    </style>
+    <style name="blue_button" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+
+    <style name="yellow_button" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/yellow2</item>
+        <item name="colorButtonNormal">@color/yellow1</item>
+    </style>
+    <style name="dark_green_button" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/dark_green1</item>
+        <item name="colorButtonNormal">@color/dark_green</item>
+    </style>
+    <style name="green" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/green1</item>
+        <item name="colorButtonNormal">@color/green</item>
+    </style>
+    <style name="blue" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/blue1</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+    <style name="PrimaryButton" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+    <style name="disableButton" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/grey</item>
+        <item name="colorControlHighlight">@color/grey</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
 
 </resources>

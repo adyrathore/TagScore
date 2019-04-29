@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:translationZ="@dimen/activity_horizontal_margin"
+    tools:context=".TestListview">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submityourfeedback"
+                android:textColor="#fff"
+                android:id="@+id/txt_main"
+                android:textSize="20sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#fff"
+                android:text="" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textViewName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".QuestionsActivity">
+
+
+    <LinearLayout
+        android:id="@+id/llFeedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="22dp"
+        >
+
+        <TextView
+            android:id="@+id/Question23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quality of the Trainer (in terms of Friendliness, Clarity in Instructions given, etc.)"
+            android:layout_margin="22dp"
+            android:textSize="18dp"/>
+
+        <RatingBar
+            android:layout_below="@+id/Question23"
+            android:id="@+id/rate_Question23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_marginLeft="22dp"
+            android:stepSize="1.0" />
+
+        <TextView
+            android:id="@+id/question24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quality of Training Material Provided to the Candidates (in terms of Relevance, Depth, Coverage, etc.)"
+            android:layout_margin="22dp"
+            android:textSize="18dp"/>
+
+        <RatingBar
+            android:layout_below="@+id/question24"
+            android:id="@+id/rate_Question24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_marginLeft="22dp"
+            android:stepSize="1.0" />
+
+        <TextView
+            android:id="@+id/question25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="22dp"
+            android:text="Infrastructure present at the Training Center (in terms of No. of classrooms, State of Laboratories, etc.)"
+            android:textSize="18dp" />
+
+        <RatingBar
+            android:layout_below="@+id/question25"
+            android:id="@+id/rate_question25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_marginLeft="22dp"
+            android:stepSize="1.0" />
+
+        <TextView
+            android:id="@+id/question_26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Counseling and Mentoring Support (in terms of relevance, usability, etc.)"
+            android:layout_margin="22dp"
+            android:textSize="18dp"/>
+
+        <RatingBar
+            android:layout_below="@+id/question_26"
+            android:id="@+id/rate_question26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_marginLeft="22dp"
+            android:stepSize="1.0" />
+        <TextView
+            android:id="@+id/question27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Overall Training Effectiveness (in terms of knowledge gained, up skilling, etc.)"
+            android:layout_margin="22dp"
+            android:textSize="18dp"/>
+
+        <RatingBar
+            android:layout_below="@+id/question27"
+            android:id="@+id/rate_question27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_marginLeft="22dp"
+            android:stepSize="1.0" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/SUBMIT"
+            android:layout_margin="20dp"
+            android:theme="@style/PrimaryButton"
+            android:padding="12dp"
+            android:translationZ="@dimen/activity_horizontal_margin"
+            android:textSize="17sp"
+            android:id="@+id/submit"
+            />
+
+    </LinearLayout>
+
+</ScrollView>
+    </LinearLayout>
+</RelativeLayout>

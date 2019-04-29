@@ -1,3 +1,163 @@
 <resources>
-    <string name="app_name">TagScore</string>
+    <string name="app_name">TAG Scores</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_location_permission">Location needed</string>
+    <string name="text_location_permission">We need to access your location</string>
+    <string name="title_activity_main5">MainTabActivity</string>
+    <string name="tab_text_1">ONLINE</string>
+    <string name="username">User Name</string>
+    <string name="tab_text_2">OFFLINE</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="country_prompt">Choose a Document Type</string>
+    <string-array name="country_arrays">
+        <item>Attendence sheet</item>
+        <item>Assessment Picture</item>
+        <item>Assessment Video</item>
+        <item>Training Center Feedback</item>
+        <item>Candidate Feedback</item>
+        <item>Assessor Feedback</item>
+        <item>Branding/Gate picture</item>
+        <item>Group Picture</item>
+    </string-array>
+    <string name="yeshnval" translatable="false">हाँ</string>
+    <string name="nohnval" translatable="false">नहीं</string>
+    <string-array name="photo_array">
+        <item>Attendence sheet</item>
+        <item>Assessment Picture</item>
+        <item>Candidate Picture</item>
+        <item>Training Center Feedback</item>
+        <item>Candidate Feedback</item>
+        <item>Assessor Feedback</item>
+        <item>Random Picture</item>
+        <item>Assessor Image</item>
+        <item>Branding/Gate picture</item>
+        <item>Group Picture</item>
+    </string-array>
+    <string name="assessor22">Assessor 22 Pointers</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="NEXT">NEXT</string>
+    <string name="batchlist">Batch List</string>
+    <string name="submityourfeedback">Submit your Feedback</string>
+    <string name="submitfeedbackformhn">अपनी प्रतिक्रिया जमा करें</string>
+    <string name="SUBMIT">SUBMIT</string>
+    <string name="SUBMIThn">"जमा करें"</string>
+    <string name="Document">Document</string>
+    <string name="Back">Back</string>
+    <string name="FEEDBACKFORM">FEEDBACK FORM</string>
+
+    <string name="Instruction">Instruction</string>
+    <string name="SelectStudent">Select Student</string>
+    <string name="START">START</string>
+    <string name="completeall">I have completed all assessment of candidate for this device</string>
+    <string name="Completetest">Complete test</string>
+    <string name="TAGID">TAGID</string>
+    <string name="Password">Password</string>
+    <string name="ForgotPASSWORD">Forgot PASSWORD?</string>
+    <string name="LOGIN">LOGIN</string>
+    <string name="PhotoCaptured">Photo Captured</string>
+    <string name="afteruplodingskip">Images will be deleted after uploading or Skip</string>
+    <string name="SKIP">SKIP</string>
+    <string name="cadti">Capture Candidate Photo</string>
+    <string name="PictreCaptured">Pictre Captured</string>
+    <string name="idcapture">ID Card Captured</string>
+    <string name="Switch">Switch</string>
+    <string name="takepicture">Take Photo</string>
+    <string name="welcomeback">Welcome Back !</string>
+    <string name="welcometotag">Welcome to TAG SCORES</string>
+    <string name="StartTest">Start Test</string>
+    <string name="StartTesthn" translatable="false">परीक्षा शुरू करें</string>
+    <string name="PREVIOUShn" translatable="false">पिछला</string>
+    <string name="BOOKMARKhn" translatable="false">" बुकमार्क"</string>
+    <string name="Nexthn" translatable="false">अगला</string>
+    <string name="reviewbookmarkhn" translatable="false"> बुकमार्क</string>
+    <string name="testname">test Name</string>
+    <string name="viewcandidates">view candidates</string>
+    <string name="AboutthisTest">About this Test </string>
+    <string name="AssessorFeedbackForm">Assessor Feedback Form </string>
+    <string name="AssessoImageValidation">Assessor Image Validation</string>
+    <string name="welcomeuser">Welcome</string>
+    <string name="YourTests">Your Tests</string>
+    <string name="PREVIOUS">PREVIOUS</string>
+    <string name="BOOKMARK">BOOKMARK</string>
+    <string name="BOOKMARK_small">Bookmark</string>
+    <string name="Next">Next</string>
+    <string name="reviewbookmark">Review Next Bookmark</string>
+    <string name="StartAssessment">Start Assessment</string>
+    <string name="StARTTheory">StART Theory</string>
+    <string name="StartPRACTRICAL">Start PRACTRICAL</string>
+    <string name="completedallassessment">I have complete all assessment for this device.</string>
+    <string name="CompleteBatch">Complete Batch</string>
+    <string name="thankyouhn">" धन्यवाद आपका परीक्षण सफलतापूर्वक जमा किया गया है"</string>
+    <string name="thankyou">Thank you!! Your test has been submitted successfully</string>
+    <string name="Close">Close</string>
+    <string name="Closehn">बंद करे</string>
+    <string name="Stop">Stop</string>
+    <string-array name="language_option">
+        <item>English</item>
+        <item>Hindi</item>
+    </string-array>
+    <string name="SelectLanguage">Select Language</string>
+    <string name="SelectLanguagehn">
+भाषा चुनिए</string>
+    <string name="vcapture">Video Captured</string>
+    <string name="validate">Validate By User Name:</string>
+    <string name="videowillbedeleted">Video will be deleted after uploading or Skip</string>
+    <string name="bookedmarked">You bookmarked Question want to view that ?</string>
+    <string name="bookedmarkedhn">" आपने बुकमार्क किया है प्रश्न यह देखना चाहते हैं?"</string>
+    <string name="assessorvalidation">Assessor feedback form and Image validation is pending.</string>
+    <string name="candidatequs1">
+ट्रेनर की गुणवत्ता (मित्रता के संदर्भ में, निर्देशों में स्पष्टता, इत्यादि।</string>
+    <string name="instructionhn">
+        निर्देश
+    </string>
+
+    <string name="candidatequest2">
+अभ्यर्थियों को प्रदान की जाने वाली प्रशिक्षण सामग्री की गुणवत्ता (प्रासंगिकता, गहराई, कवरेज इत्यादि के संदर्भ में)
+    </string>
+    <string name="candidatequest3">
+प्रशिक्षण केंद्र में मौजूद बुनियादी ढांचा (कक्षाओं की संख्या, प्रयोगशालाओं के राज्य आदि के संदर्भ में)</string>
+    <string name="cadidatequest4">
+परामर्श और सलाह समर्थन (प्रासंगिकता, उपयोगिता, आदि के संदर्भ में)</string>
+    <string name="candidatequest5">
+कुल मिलाकर प्रशिक्षण प्रभावशीलता (ज्ञान प्राप्त करने के मामले में, स्किलिंग आदि)
+    </string>
+    <string name="please_wait">Please wait...</string>
+    <string name="Downloading">Downloading... Please Wait.</string>
+    <string name="Uploading">Uploading... Please wait.</string>
+
+
+    <string name="Loading">Loading...</string>
+    <string name="alert">Alert!</string>
+    <string name="ok">OK</string>
+    <string name="login_not_exist">Login credential does not match please make sure you added correct username and password or you downloaded test for this credential</string>
+    <string name="download">Download</string>
+    <string name="upload">Upload</string>
+    <string name="take_test">Take Test</string>
+    <string name="start_test">Start Test</string>
+    <string name="enable_gps">Your GPS is not Enabled Please Enable it for processing further.</string>
+    <string name="enable">Enable</string>
+    <string name="all_offline_details_are_removed">All Offline details for this schdule has been removed</string>
+    <string name="no_test_found">No test downloaded found</string>
+    <string name="already_given">Assessor Feedback Already Given</string>
+    <string name="you_dont_have_front_camera">Your phone don\'t have front facing camera.</string>
+    <string name="uploading_please_wait">Uploding Image Please wait...</string>
+    <string name="image_saved">Image saved ...</string>
+    <string name="successfully_download">Successfully downloaded.</string>
+    <string name="loading">Loading...</string>
+    <string name="pause">Pause</string>
+    <string name="please_capture_image_again">Please capture image again.</string>
+    <string name="answered">Answered</string>
+    <string name="unanswered">Unanswered</string>
+    <string name="current">Current</string>
+    <string name="rec">Rec : 00:00</string>
+    <string name="uploading_video_please_wait">Uploding Video Please wait...</string>
+    <string name="unziping_file">unzipping file...</string>
+    <string name="space_issue">Device does not have a space for download this test. Please free some space</string>
+    <string name="candidate_photo_required">candidate photo is required</string>
+    <string name="cid_card_photo_required">candidate Id card photo is required</string>
+    <string name="space_issue_mb">Device does not have a space. Make sure that your device should have at least 1 GB internal memory</string>
+
+
 </resources>

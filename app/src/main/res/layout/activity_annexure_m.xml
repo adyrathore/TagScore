@@ -1,0 +1,1461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollviewewr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:translationZ="@dimen/activity_horizontal_margin"
+        tools:context=".TestListview">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Annexure M"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/textViewName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/cardview_light_background"
+                android:fitsSystemWindows="true">
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    tools:context=".ActivityAnnexureM">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtquestion1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Is the centre located at the same address as mentioned on SDMS?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rdg_question1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtquestion2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Is the Infrastructure (No. of classrooms, State of Laboratories, etc.) present at the Training Center adequate and satisfactory to conduct the training?"
+                            android:textSize="18dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <RadioGroup
+                                android:id="@+id/rdg_question2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/yes2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/Yes"
+                                    android:textSize="18dp" />
+
+                                <RadioButton
+                                    android:id="@+id/no2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="19dp"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/No"
+                                    android:textSize="18dp" />
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <Button
+                                android:id="@+id/btn_takepic"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_camera_enhance_black_24dp"
+                                android:text="take Picture"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <Button
+                                android:id="@+id/btn_viewdetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/view_24dp"
+                                android:text="View Pictures"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvImages1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                                app:reverseLayout="true">
+
+                            </android.support.v7.widget.RecyclerView>
+
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/edittext2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Is the assessment being conducted at same centre, where trainees got trained?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rdg_question3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Assessment is conducted on the Scheduled Date?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rdg_question4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="If No , Reasons for change of Date?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rgd_question5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edittext5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="11dp"
+                        android:hint="Remark"
+                        android:textSize="18dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Are the Trainees being assessed for same job role, for which they were trained?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rgd_question6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Each Trainee’s identity checked before conducting assessment?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rgd_question7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Are the trainees confirming that they paid the Assessment Fee?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rgd_question8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp"
+
+                                />
+
+                            <RadioButton
+                                android:id="@+id/no8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Are the trainees aware they are enrolled under PMKVY Scheme?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rgd_question9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Are the trainees aware of the Certification Process?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rgd_question10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Are the trainees aware of Reward Disbursement?"
+                            android:textSize="18dp"
+
+                            />
+
+                        <RadioGroup
+                            android:id="@+id/rdg_question11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Are the trainees aware of the Course fee?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rdg_question12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Are the trainees aware of Auto Debit Facility?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rdg_question13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext13"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Are the trainees aware of the Placement opportunities?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rdg_question14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Trainee Feedback form available, and signed by the trainee?"
+                            android:textSize="18dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RadioGroup
+                                android:id="@+id/rdg_question15"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/yes15"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/Yes"
+                                    android:textSize="18dp" />
+
+                                <RadioButton
+                                    android:id="@+id/no15"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="19dp"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/No"
+                                    android:textSize="18dp" />
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="16dp"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <Button
+                                android:id="@+id/btn_takepic15"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_camera_enhance_black_24dp"
+                                android:text="take Picture"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <Button
+                                android:id="@+id/btn_viewdetails15"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/view_24dp"
+                                android:text="View Pictures"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvImages15"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                                app:reverseLayout="true">
+
+                            </android.support.v7.widget.RecyclerView>
+
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/edittext15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Trainee Attendance Record Available, and signed by the trainees?"
+                            android:textSize="18dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioGroup
+                                android:id="@+id/rdg_question16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/yes16"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/Yes"
+                                    android:textSize="18dp" />
+
+                                <RadioButton
+                                    android:id="@+id/no16"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="19dp"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/No"
+                                    android:textSize="18dp" />
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="16dp"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <Button
+                                android:id="@+id/btn_takepic16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_camera_enhance_black_24dp"
+                                android:text="take Picture"
+                                android:visibility="gone"
+                                android:theme="@style/PrimaryButton"></Button>
+
+                            <Button
+                                android:id="@+id/btn_viewdetails16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/view_24dp"
+                                android:text="View Pictures"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvImages16"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                                app:reverseLayout="true">
+
+                            </android.support.v7.widget.RecyclerView>
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/edittext16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Trainees Enrolment Forms available, with PMKVY logo and PMKVY Disclaimer? Are the forms signed by trainees?"
+                            android:textSize="18dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioGroup
+                                android:id="@+id/rdg_question17"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/yes17"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/Yes"
+                                    android:textSize="18dp" />
+
+                                <RadioButton
+                                    android:id="@+id/no17"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="19dp"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/No"
+                                    android:textSize="18dp" />
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="16dp"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <Button
+                                android:id="@+id/btn_takepic17"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_camera_enhance_black_24dp"
+                                android:text="take Picture"
+                                android:visibility="gone"
+                                android:theme="@style/PrimaryButton"></Button>
+
+                            <Button
+                                android:id="@+id/btn_viewdetails17"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/view_24dp"
+                                android:text="View Pictures"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvImages17"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                                app:reverseLayout="true">
+
+                            </android.support.v7.widget.RecyclerView>
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/edittext17"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Are the names on Enrolment forms tallying with the Attendance records of the batch (check any 5 forms)"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rdg_question18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes18"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no18"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext18"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Are the trainees given a PMKVY booklet/Pamphlet for information?"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rdg_question19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="19dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/yes19"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/Yes"
+                                android:textSize="18dp" />
+
+                            <RadioButton
+                                android:id="@+id/no19"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/No"
+                                android:textSize="18dp" />
+                        </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/edittext19"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Posters of PMKVY displayed in Counseling room?"
+                            android:textSize="18dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RadioGroup
+                                android:id="@+id/rdg_question20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/yes20"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/Yes"
+                                    android:textSize="18dp" />
+
+                                <RadioButton
+                                    android:id="@+id/no20"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="19dp"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/No"
+                                    android:textSize="18dp" />
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="16dp"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <Button
+                                android:id="@+id/btn_takepic20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_camera_enhance_black_24dp"
+                                android:text="take Picture"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <Button
+                                android:id="@+id/btn_viewdetails20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/view_24dp"
+                                android:text="View Pictures"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvImages20"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                                app:reverseLayout="true">
+
+                            </android.support.v7.widget.RecyclerView>
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/edittext20"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question21"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="Posters of PMKVY displayed in Classroom?"
+                            android:textSize="18dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RadioGroup
+                                android:id="@+id/rdg_question21"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/yes21"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/Yes"
+                                    android:textSize="18dp" />
+
+                                <RadioButton
+                                    android:id="@+id/no21"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="19dp"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/No"
+                                    android:textSize="18dp" />
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="16dp"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <Button
+                                android:id="@+id/btn_takepic21"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_camera_enhance_black_24dp"
+                                android:text="take Picture"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <Button
+                                android:id="@+id/btn_viewdetails21"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/view_24dp"
+                                android:text="View Pictures"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvImages21"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                                app:reverseLayout="true">
+
+                            </android.support.v7.widget.RecyclerView>
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/edittext21"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_question22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:text="PMKVY signage displayed outside the Center?"
+                            android:textSize="18dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioGroup
+                                android:id="@+id/rdg_question22"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="19dp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/yes22"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/Yes"
+                                    android:textSize="18dp" />
+
+                                <RadioButton
+                                    android:id="@+id/no22"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="19dp"
+                                    android:layout_marginTop="6dp"
+                                    android:text="@string/No"
+                                    android:textSize="18dp" />
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="16dp"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <Button
+                                android:id="@+id/btn_takepic22"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_camera_enhance_black_24dp"
+                                android:text="Take Picture"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <Button
+                                android:id="@+id/btn_viewdetails22"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/view_24dp"
+                                android:text="View Pictures"
+                                android:theme="@style/PrimaryButton"
+                                android:visibility="gone"></Button>
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvImages22"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                                app:reverseLayout="true">
+
+                            </android.support.v7.widget.RecyclerView>
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/edittext22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="11dp"
+                            android:layout_marginLeft="4dp"
+                            android:hint="Remark"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/checkbox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="I hereby confirm that details filled above are thoroughly checked by undersigned" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_savefeedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_margin="20dp"
+                        android:padding="12dp"
+                        android:text="@string/NEXT"
+                        android:textSize="17sp"
+                        android:theme="@style/PrimaryButton"
+                        android:translationZ="@dimen/activity_horizontal_margin" />
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

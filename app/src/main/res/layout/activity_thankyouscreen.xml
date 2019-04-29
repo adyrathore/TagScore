@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityThankyou">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:tint="@color/colorPrimary"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/tick"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:id="@+id/txtthanks"
+            android:gravity="center"
+            android:text="@string/thankyou"
+            android:layout_gravity="center"
+            android:layout_margin="18dp"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/Close"
+            android:layout_margin="14dp"
+            android:theme="@style/PrimaryButton"
+            android:id="@+id/btn_next"
+            />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
