@@ -30,7 +30,7 @@ public class Result {
     private Integer result;
     @SerializedName("percentage")
     @Expose
-    private Integer percentage;
+    private String percentage;
     @SerializedName("user_nos_wise_details")
     @Expose
     private ArrayList<UserNosWiseDetail> userNosWiseDetails = null;
@@ -94,11 +94,11 @@ public class Result {
         this.result = result;
     }
 
-    public Integer getPercentage() {
+    public String getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(Integer percentage) {
+    public void setPercentage(String percentage) {
         this.percentage = percentage;
     }
 

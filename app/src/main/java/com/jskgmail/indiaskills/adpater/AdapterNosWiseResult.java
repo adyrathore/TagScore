@@ -62,6 +62,11 @@ public class AdapterNosWiseResult extends BaseAdapter {
         holder.tvModuleName.setText(userNosWiseDetails.get(position).getModuleName());
         holder.tvTotalMarks.setText("Total Marks : "+userNosWiseDetails.get(position).getTotalMarks());
         holder.tvObtainedMarks.setText("Obtain Marks : "+userNosWiseDetails.get(position).getGainMarks());
+        if(userNosWiseDetails.get(position).getGainMarks()==null)
+        {
+            holder.tvObtainedMarks.setText("Obtain Marks : 0" );
+
+        }
         return view;
     }
 

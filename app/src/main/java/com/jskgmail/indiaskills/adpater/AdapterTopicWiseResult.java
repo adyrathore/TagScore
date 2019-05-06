@@ -64,6 +64,11 @@ public class AdapterTopicWiseResult extends BaseAdapter {
         holder.tvTopicName.setText(userTopicViceReports.get(position).getTopicName());
         holder.tvTotalMarks.setText("Total Marks : "+ userTopicViceReports.get(position).getQuestionMarks());
         holder.tvObtainedMarks.setText("Obtain Marks : "+ userTopicViceReports.get(position).getGainMarks());
+        if(userTopicViceReports.get(position).getGainMarks()==null)
+        {
+            holder.tvObtainedMarks.setText("Obtain Marks : 0" );
+
+        }
         return view;
     }
 

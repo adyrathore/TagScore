@@ -169,6 +169,7 @@
     <string name="topic_name">Topic Name</string>
     <string name="question">Question</string>
     <string name="answer">Answer</string>
+    <string name="continue_">Continue</string>
 
 
 </resources>

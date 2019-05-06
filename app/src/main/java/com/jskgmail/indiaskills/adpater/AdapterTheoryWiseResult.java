@@ -69,13 +69,20 @@ public class AdapterTheoryWiseResult extends BaseAdapter {
         holder.tvTimeStap.setText(date);
         holder.tvAttemptCount.setText("Attempt Count : " + theories.get(position).getAttemptCount());
         holder.tvObtainedMarks.setText("Obtain Marks : " + theories.get(position).getMarksGain());
-        if(theories.get(position).getMarksGain().equals("0"))
+        if("0".equals(theories.get(position).getMarksGain())||theories.get(position).getMarksGain()==null)
         {
             holder.tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.wrong,0);
 
         }
         else {
             holder.tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.right, 0);
+
+        }
+        if(theories.get(position).getMarksGain()==null)
+        {
+            holder.tvObtainedMarks.setText("Obtain Marks : 0" );
+            holder.tvAnswer.setText("N/A");
+
 
         }
 
