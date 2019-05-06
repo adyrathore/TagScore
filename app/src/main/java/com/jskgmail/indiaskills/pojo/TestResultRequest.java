@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class TestDetailRequest implements Serializable{
+public class TestResultRequest implements Serializable{
     @SerializedName("api_key")
     @Expose
     private String apiKey;
@@ -15,7 +15,7 @@ public class TestDetailRequest implements Serializable{
     @SerializedName("testID")
     @Expose
     private String testID;
-    @SerializedName("uniqueId")
+    @SerializedName("unique_Id")
     @Expose
     private String uniqueId;
     @SerializedName("languageCode")

@@ -1,6 +1,7 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">TAG Scores</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps" translatable="false" tools:ignore="MissingTranslation">Map</string>
     <string name="title_location_permission">Location needed</string>
     <string name="text_location_permission">We need to access your location</string>
     <string name="title_activity_main5">MainTabActivity</string>
@@ -40,9 +41,9 @@
     <string name="NEXT">NEXT</string>
     <string name="batchlist">Batch List</string>
     <string name="submityourfeedback">Submit your Feedback</string>
-    <string name="submitfeedbackformhn">अपनी प्रतिक्रिया जमा करें</string>
+    <string name="submitfeedbackformhn" translatable="false">अपनी प्रतिक्रिया जमा करें</string>
     <string name="SUBMIT">SUBMIT</string>
-    <string name="SUBMIThn">"जमा करें"</string>
+    <string name="SUBMIThn" translatable="false">"जमा करें"</string>
     <string name="Document">Document</string>
     <string name="Back">Back</string>
     <string name="FEEDBACKFORM">FEEDBACK FORM</string>
@@ -81,7 +82,7 @@
     <string name="YourTests">Your Tests</string>
     <string name="PREVIOUS">PREVIOUS</string>
     <string name="BOOKMARK">BOOKMARK</string>
-    <string name="BOOKMARK_small">Bookmark</string>
+    <string name="BOOKMARK_small" translatable="false">Bookmark</string>
     <string name="Next">Next</string>
     <string name="reviewbookmark">Review Next Bookmark</string>
     <string name="StartAssessment">Start Assessment</string>
@@ -89,18 +90,17 @@
     <string name="StartPRACTRICAL">Start PRACTRICAL</string>
     <string name="completedallassessment">I have complete all assessment for this device.</string>
     <string name="CompleteBatch">Complete Batch</string>
-    <string name="thankyouhn">" धन्यवाद आपका परीक्षण सफलतापूर्वक जमा किया गया है"</string>
+    <string name="thankyouhn" translatable="false">" धन्यवाद आपका परीक्षण सफलतापूर्वक जमा किया गया है"</string>
     <string name="thankyou">Thank you!! Your test has been submitted successfully</string>
     <string name="Close">Close</string>
-    <string name="Closehn">बंद करे</string>
+    <string name="Closehn" translatable="false">बंद करे</string>
     <string name="Stop">Stop</string>
     <string-array name="language_option">
         <item>English</item>
         <item>Hindi</item>
     </string-array>
-    <string name="SelectLanguage">Select Language</string>
-    <string name="SelectLanguagehn">
-भाषा चुनिए</string>
+    <string name="SelectLanguage" translatable="false">Select Language</string>
+    <string name="SelectLanguagehn" translatable="false">भाषा चुनिए</string>
     <string name="vcapture">Video Captured</string>
     <string name="validate">Validate By User Name:</string>
     <string name="videowillbedeleted">Video will be deleted after uploading or Skip</string>
@@ -158,6 +158,17 @@
     <string name="candidate_photo_required">candidate photo is required</string>
     <string name="cid_card_photo_required">candidate Id card photo is required</string>
     <string name="space_issue_mb">Device does not have a space. Make sure that your device should have at least 1 GB internal memory</string>
+    <string name="title_activity_result">Result</string>
+    <string name="your_assesment_has_been_successfully_created" >Your assessment has been created successfully.</string>
+    <string name="here_is_your_result">Here is your result:</string>
+    <string name="pass">PASS</string>
+    <string name="nos_module_wise">Nos/Module wise Result</string>
+    <string name="topic_wise">Topic Wise Result</string>
+    <string name="theory_wise">Theory Question Wise Report</string>
+    <string name="nos_module_name">Nos/Module Name</string>
+    <string name="topic_name">Topic Name</string>
+    <string name="question">Question</string>
+    <string name="answer">Answer</string>
 
 
 </resources>

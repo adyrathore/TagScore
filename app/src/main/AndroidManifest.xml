@@ -212,6 +212,9 @@
             android:name="io.fabric.ApiKey"
             android:value="31a5cca651a52626290bb18fdf6e70a98ca91158" />
 
+        <activity
+            android:name=".ActivityResult"
+            android:label="@string/title_activity_result"></activity>
     </application>
 
 </manifest>

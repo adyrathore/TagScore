@@ -53,12 +53,20 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
     View llFeedback;
     String json;
     boolean candidateFeedbackrequired=true;
+    private DatabaseHelper databaseHelper;
+    private String sId;
+    private String showResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_candidatefeedbackform);
+        databaseHelper = new DatabaseHelper(this);
+
         testList=(TestList)getIntent().getSerializableExtra(C.TEST);
         activeDetails=getIntent().getStringExtra(C.ACTIVE_DETAILS);
+        sId = Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID();
+
         btn = (Button) findViewById(R.id.submit);
         r1 = (RatingBar) findViewById(R.id.rate_Question23);
         r2 = (RatingBar) findViewById(R.id.rate_Question24);
@@ -95,6 +103,7 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
         try {
             JSONObject scheduleSettings = Util.getScheduleSettings(json);
             String cf = scheduleSettings.getString("candidate_feedback");
+            showResult = scheduleSettings.getString("result_on_screen");
 
 
             if (cf != null) {
@@ -377,7 +386,7 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
                     //  String message = String.valueOf(response.get("message"));
                     // showMessage("error",response.toString());
                     Globalclass.userids = "";
-                    Intent intent = new Intent(ActivityCandidateFeedbackForm.this, ActivityThankyou.class);
+                    Intent intent = new Intent(ActivityCandidateFeedbackForm.this, showResult.equals(C.YES)?ActivityResult.class: ActivityThankyou.class);
                     intent.putExtra(C.TEST,testList);
                     intent.putExtra(C.ACTIVE_DETAILS,activeDetails);
                     startActivity(intent);
@@ -485,7 +494,8 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
                         if(!candidateFeedbackrequired) {
                             Globalclass.userids = "";
                             Globalclass.lastpicturecandidate = "0";
-                            Intent intent = new Intent(ActivityCandidateFeedbackForm.this, ActivityThankyou.class);
+                            Intent intent = new Intent(ActivityCandidateFeedbackForm.this, showResult.equals(C.YES)?ActivityResult.class: ActivityThankyou.class);
+
                             intent.putExtra(C.TEST, testList);
                             intent.putExtra(C.ACTIVE_DETAILS, activeDetails);
                             startActivity(intent);
@@ -587,6 +597,7 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
         cursor.close();
         return resultSet;
     }
+
 
 
 

@@ -88,6 +88,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -197,6 +199,10 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
     ArrayList<String> imageArray;
     String randomePic, isVideoRecord;
     private String moveToPrev;
+    private String fixedTime;
+    private String timeFrequency = "";
+    private Timer timer;
+    private String submitWithoutAttemptAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,14 +212,13 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         ButterKnife.bind(this);
 
 
-
         Drawable spinnerDrawable = spnLanguage.getBackground().getConstantState().newDrawable();
 
         spinnerDrawable.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             spnLanguage.setBackground(spinnerDrawable);
-        }else{
+        } else {
             spnLanguage.setBackgroundDrawable(spinnerDrawable);
         }
         audioLayout.setVisibility(View.GONE);
@@ -235,13 +240,26 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         json = getJson();
         try {
             JSONObject scheduleSettings = getScheduleSettings();
-           moveToPrev = scheduleSettings.getString("movtoprev");
-            if(moveToPrev.equals(C.NO))
-            {
-                btnPriviousquestion.getLayoutParams().width =0;
-                btnPriviousquestion.getLayoutParams().height =0;
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)btnPriviousquestion.getLayoutParams();
-                layoutParams.setMargins(0,0,0,0);
+            moveToPrev = scheduleSettings.getString("movtoprev");
+            fixedTime = scheduleSettings.getString("fixedTime");
+            timeFrequency = scheduleSettings.getString("tfeq");
+            submitWithoutAttemptAll = scheduleSettings.getString("submit_without_all_attempt");
+
+            if (fixedTime.equals(C.YES)) {
+                startTimer();
+            }
+
+            if (moveToPrev.equals(C.NO) || fixedTime.equals(C.YES)) {
+                btnPriviousquestion.getLayoutParams().width = 0;
+                btnPriviousquestion.getLayoutParams().height = 0;
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPriviousquestion.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, 0);
+                btnPriviousquestion.setBackground(null);
+                btnBookmarkquestion.getLayoutParams().width = 0;
+                btnBookmarkquestion.getLayoutParams().height = 0;
+                layoutParams = (LinearLayout.LayoutParams) btnPriviousquestion.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, 0);
+                btnBookmarkquestion.setBackground(null);
             }
 
             if (activeDetails.equalsIgnoreCase("0")) {
@@ -298,6 +316,46 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 btnBookmarkquestion.setText(R.string.BOOKMARK);
             }
             getquestionarrylist();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void startTimer() {
+        try {
+            long time = 0;
+            time = 60 * Integer.parseInt(timeFrequency) * 1000;
+            timer = new Timer();
+            if (activeDetails == "1") {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (btnNextquestion.getVisibility() == View.GONE) {
+                            isSubmit = true;
+                        } else {
+                            Globalclass.tempQuestionNo = Globalclass.guestioncount + 1;
+                            next();
+                        }
+                    }
+                }, time);
+            } else {
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+
+                        if (btnNextquestion.getVisibility() == View.GONE) {
+                            isSubmit = true;
+                        } else {
+                            Globalclass.tempQuestionNo = Globalclass.guestioncount + 1;
+                        }
+
+                        next();
+
+                    }
+                }, time, time);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -450,9 +508,15 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 new LongOperationgetquestiondetails().execute();
                 break;
             case R.id.btn_nextquestion:
-                Globalclass.tempQuestionNo = Globalclass.guestioncount + 1;
 
+                Globalclass.tempQuestionNo = Globalclass.guestioncount + 1;
                 next();
+
+                if (timer != null) {
+                    timer.cancel();
+                    timer = null;
+                }
+
                 break;
             case R.id.btn_bookmarkquestion:
                 if (Globalclass.capture.equalsIgnoreCase("1")) {
@@ -725,43 +789,25 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                         //DatabaseHelper db = new DatabaseHelper(TestQuestion.this);
 
                         boolean b = db.insert_logdetails(Globalclass.idcandidate, testList.getId(), sId, SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getUserID(), reviewquestion, str, answeroptionval);
-                        if (b == true) {
-                            savevalues();
-                        } else {
-                            savevalues();
-                        }
+                        savevalues();
                     } else {
                         if (activeDetails.equalsIgnoreCase("0")) {
-                            if (answeroptionval.equalsIgnoreCase("")) {
+                            if (answeroptionval.equalsIgnoreCase("") && submitWithoutAttemptAll.equals(C.NO)) {
 
                                 removeViews();
                                 new LongOperationgetquestiondetails().execute();
                             } else {
                                 boolean b = db.insert_logdetails(Globalclass.idcandidate, testList.getId(), sId, SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getUserID(), reviewquestion, str, answeroptionval);
-                                if (b) {
-                                    savevalues();
-                                } else {
-                                    savevalues();
-                                }
+                                savevalues();
                             }
                         } else if (activeDetails.equalsIgnoreCase("1")) {
 
-                            if (answeroptionval.equalsIgnoreCase("")) {
-                                if (answeroptionnoval.equalsIgnoreCase("")) {
-
-                                    removeViews();
-                                    new LongOperationgetquestiondetails().execute();
-                                } else {
-                                    savevalues();
-                                }
-
+                            if (answeroptionval.equalsIgnoreCase("") && submitWithoutAttemptAll.equals(C.NO)) {
+                                removeViews();
+                                new LongOperationgetquestiondetails().execute();
                             } else {
                                 boolean b = db.insert_logdetails(Globalclass.idcandidate, testList.getId(), sId, SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getUserID(), reviewquestion, str, answeroptionval);
-                                if (b == true) {
-                                    savevalues();
-                                } else {
-                                    savevalues();
-                                }
+                                savevalues();
                             }
                         }
 
@@ -853,8 +899,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                             }
                         }
                     } else {
-                        if (progressDialog != null)
-                            progressDialog.show();
                         removeViews();
 
                         currentbookmark = "0";
@@ -1347,6 +1391,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
             boolean isSuccess = databaseHelper.updateTotalTimeTaken(testList.getId(), Globalclass.userids, sId, activeDetails, time + "");
 
             shutdown();
+
             Intent intent = new Intent(TestQuestionDisplayActivity.this, ActivityLastImageCapture.class);
             intent.putExtra(C.TEST, testList);
             intent.putExtra(C.ACTIVE_DETAILS, activeDetails);
@@ -1480,7 +1525,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                             button.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if(moveToPrev.equals(C.NO)) {
+                                    if (moveToPrev.equals(C.NO) || fixedTime.equals(C.YES)) {
                                         return;
                                     }
                                     Globalclass.tempQuestionNo = view.getId();
@@ -2055,6 +2100,9 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (timer == null && fixedTime.equals(C.YES) && activeDetails.equals("0")) {
+            startTimer();
+        }
     }
 
 
@@ -2477,7 +2525,13 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
     @Override
     protected void onDestroy() {
+
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
         super.onDestroy();
+
     }
 
 
@@ -2495,4 +2549,11 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         }
         return null;
     }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+    }
+
 }

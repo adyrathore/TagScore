@@ -56,6 +56,7 @@ public interface C {
     String API_GET_BATCH_LIST= BASE_URL + "users/get_batch_status";
     String API_BATCH_COMPLETE= BASE_URL + "users/mark_batch_complete";
     String API_MEDIA_UPLOAD= BASE_URL + "users/media_upload";
+    String API_TEST_RESULT = BASE_URL + "users/get_candidate_result";
 
 
 }

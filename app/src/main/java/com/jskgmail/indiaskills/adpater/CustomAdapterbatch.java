@@ -80,7 +80,7 @@ public class CustomAdapterbatch extends RecyclerView.Adapter<CustomAdapterbatch.
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        //    batch_info info= infos.get(position);
+        //    batch_info info= userNosWiseDetails.get(position);
 
         //  Toast.makeText(context, feed.getUsername(), Toast.LENGTH_SHORT).show();
 
