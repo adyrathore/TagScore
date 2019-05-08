@@ -440,11 +440,16 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
 
         final DatabaseHelper myDb = new DatabaseHelper(ActivityCandidateFeedbackForm.this);
         final Cursor cursor = myDb.getAllquestiondetilsvaluploadbackonline(testList.getId(), testList.getScheduleIdPk(), Globalclass.userids);
-        if (cursor.getCount() > 0) {
-            JSONArray array = cur2Json(cursor);
+        if (cursor.getCount() >= 0) {
+            JSONArray array = new JSONArray();
             JSONObject sd = new JSONObject();
             try {
-                sd.put("data", (Object) array);
+                if (cursor.getCount() == 0) {
+                    sd.put("data", new JSONArray());
+                } else {
+                    array = cur2Json(cursor);
+                    sd.put("data", (Object) array);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

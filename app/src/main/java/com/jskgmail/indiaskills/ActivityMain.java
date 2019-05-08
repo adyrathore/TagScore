@@ -65,8 +65,8 @@ public class ActivityMain extends AppCompatActivity {
 //            etPassword.setText("7014680058");
             etName.setText("zlvn0");
             etPassword.setText("55261");
-//            etName.setText("mukesh.pandey@indiaskills.edu.in");
-//            etPassword.setText("ispl@123");
+            etName.setText("mukesh.pandey@indiaskills.edu.in");
+            etPassword.setText("ispl@123");
 
 
         }

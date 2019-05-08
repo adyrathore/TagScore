@@ -557,14 +557,21 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
             if (activeDetails.equals("0") && questiontype.equals("4")) {
                 answeroptionval = editTextType4.getText().toString();
             }
+
             if ((answeroptionval.equalsIgnoreCase("") ||
                     answeroptionval.equalsIgnoreCase("0")) && (answeroptionnoval.equals("") || answeroptionnoval.equals(""))) {
 
+                if (submitWithoutAttemptAll.equals(C.YES)) {
 
-                if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
-                    showMessage("", "आगे बढ़ने के लिए उत्तर दें");
+                    showBeforeSubmit("", "Are you sure do you want to submit the test?");
+
+
                 } else {
-                    showMessage("", "Please Give Answer to Move Next");
+                    if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
+                        showMessage("", "आगे बढ़ने के लिए उत्तर दें");
+                    } else {
+                        showMessage("", "Please Give Answer to Move Next");
+                    }
                 }
                 return;
             }
@@ -802,7 +809,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                             }
                         } else if (activeDetails.equalsIgnoreCase("1")) {
 
-                            if (answeroptionval.equalsIgnoreCase("") && submitWithoutAttemptAll.equals(C.NO)) {
+                            if (answeroptionval.equalsIgnoreCase("")) {
                                 removeViews();
                                 new LongOperationgetquestiondetails().execute();
                             } else {
@@ -830,16 +837,22 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                     bookmarkflag = 1;
                 }
                 boolean succ;
-                if (activeDetails.equalsIgnoreCase("0")) {
-                    succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
-                } else {
-                    String rangemark = "";
-                    String strquestion[] = answeroptionval.split(",");
-                    for (int i = 0; i < strquestion.length; i++) {
-                        rangemark = "100" + "," + rangemark;
-                    }
-                    succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "rangemark", "1", activeDetails, answeroptionnoval);
 
+                if (submitWithoutAttemptAll.equals(C.NO)) {
+
+                    if (activeDetails.equalsIgnoreCase("0")) {
+                        succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
+                    } else {
+                        String rangemark = "";
+                        String strquestion[] = answeroptionval.split(",");
+                        for (int i = 0; i < strquestion.length; i++) {
+                            rangemark = "100" + "," + rangemark;
+                        }
+                        succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "rangemark", "1", activeDetails, answeroptionnoval);
+
+                    }
+                }else {
+                    succ=true;
                 }
                 if (succ) {
                     if (isSubmit) {
@@ -960,15 +973,19 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                     bookmarkflag = 1;
                 }
                 boolean success;
-                if (activeDetails.equalsIgnoreCase("0")) {
-                    success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
-                } else {
-                    String rangemark = "";
-                    String strquestion[] = answeroptionval.split(",");
-                    for (int i = 0; i < strquestion.length; i++) {
-                        rangemark = "100" + "," + rangemark;
+                if (submitWithoutAttemptAll.equals(C.NO)) {
+                    if (activeDetails.equalsIgnoreCase("0")) {
+                        success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
+                    } else {
+                        String rangemark = "";
+                        String strquestion[] = answeroptionval.split(",");
+                        for (int i = 0; i < strquestion.length; i++) {
+                            rangemark = "100" + "," + rangemark;
+                        }
+                        success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, "1", activeDetails, answeroptionnoval);
                     }
-                    success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, "1", activeDetails, answeroptionnoval);
+                } else {
+                    success = true;
                 }
                 if (success == true) {
                     if (isSubmit) {
@@ -2080,7 +2097,15 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                             } else {
                                 btnSubmitTest.setText("Submit");
                             }
+                        } else if (submitWithoutAttemptAll.equals(C.YES)) {
+                            btnSubmitTest.setVisibility(View.VISIBLE);
+                            if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
+                                btnSubmitTest.setText(R.string.SUBMIThn);
+                            } else {
+                                btnSubmitTest.setText("Submit");
+                            }
                         } else {
+
                             isSubmit = false;
                             btnSubmitTest.setVisibility(View.GONE);
                             if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
@@ -2205,7 +2230,20 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
             e.printStackTrace();
         }
     }
-
+    public void showBeforeSubmit(String title, String Message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        //   builder.setTitle(title);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                isSubmit = true;
+                next();
+            }
+        });
+        builder.setMessage(Message);
+        builder.show();
+    }
     public void showMessage(String title, String Message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);

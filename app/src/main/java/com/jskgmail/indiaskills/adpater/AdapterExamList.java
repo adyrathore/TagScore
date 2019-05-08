@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jskgmail.indiaskills.ActivityTestList;
@@ -84,9 +85,9 @@ public class AdapterExamList extends BaseAdapter {
         if (Util.ONLINE) {
             boolean isTestCompleted = databaseHelper.isTestCompletedOrNot(testList.getScheduleIdPk());
             boolean isTestDownloaded = databaseHelper.getAllDate_batchid(testList.getScheduleIdPk());
+            viewHolder.btnStartTest.setVisibility(View.VISIBLE);
 
-
-            if (testList.getTestType().equals(C.OFFLINE)) {
+//            if (testList.getTestType().equals(C.OFFLINE)) {
 
                 if (!isTestDownloaded && Util.ONLINE) {
                     viewHolder.ivTestStatus.setVisibility(View.GONE);
@@ -94,42 +95,45 @@ public class AdapterExamList extends BaseAdapter {
                     viewHolder.btnOperation.setEnabled(true);
                 } else if (isTestDownloaded && !isTestCompleted && Util.ONLINE) {
                     viewHolder.ivTestStatus.setVisibility(View.GONE);
-                    viewHolder.btnOperation.setText(R.string.download);
+                    viewHolder.btnOperation.setText(R.string.downloaded);
                     viewHolder.btnOperation.setEnabled(false);
-                    viewHolder.btnOperation.setBackgroundColor(activity.getResources().getColor(android.R.color.darker_gray));
-                }
-                else if(isTestDownloaded && isTestCompleted){
+                    viewHolder.btnOperation.setBackgroundResource(R.drawable.unselected_grey);
+                } else if (isTestDownloaded && isTestCompleted && Util.ONLINE) {
+                    viewHolder.btnOperation.setEnabled(true);
                     viewHolder.ivTestStatus.setVisibility(View.VISIBLE);
                     viewHolder.btnOperation.setText(R.string.upload);
                     viewHolder.btnOperation.setEnabled(true);
 
                 }
 
-            } else if (testList.getTestType().equals(C.ONLINE)) {
+//            } else if (testList.getTestType().equals(C.ONLINE)) {
 
-                viewHolder.btnOperation.setEnabled(true);
-                if (!isTestCompleted) {
-                    viewHolder.ivTestStatus.setVisibility(View.GONE);
-                    viewHolder.btnOperation.setText(R.string.start_test);
-                }
-
+//                if (!isTestCompleted) {
+//                    viewHolder.ivTestStatus.setVisibility(View.GONE);
+//                    viewHolder.btnOperation.setText(R.string.start_test);
+//                }
                 else {
                     viewHolder.ivTestStatus.setVisibility(View.VISIBLE);
                     viewHolder.btnOperation.setText(R.string.upload);
                 }
 
 
-            }
+//            }
         } else {
+            viewHolder.btnStartTest.setVisibility(View.GONE);
             if (testList.getPurchasedTime().equals("1")) {
 
                 viewHolder.ivTestStatus.setVisibility(View.VISIBLE);
                 viewHolder.btnOperation.setText(R.string.upload);
                 viewHolder.btnOperation.setEnabled(false);
             } else {
+
                 viewHolder.ivTestStatus.setVisibility(View.GONE);
                 viewHolder.btnOperation.setText(R.string.take_test);
                 viewHolder.btnOperation.setEnabled(true);
+                LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) viewHolder.btnOperation.getLayoutParams();
+                param.weight=2.0f;
+                viewHolder.btnOperation.setLayoutParams(param);
             }
         }
 
@@ -139,10 +143,10 @@ public class AdapterExamList extends BaseAdapter {
 
                 if (Util.isGPSEnabled(activity)) {
 
-                    SharedPreference.getInstance(activity).setTest(C.ONGOING_TEST,testList);
+                    SharedPreference.getInstance(activity).setTest(C.ONGOING_TEST, testList);
                     if (viewHolder.btnOperation.getText().equals(activity.getResources().getText(R.string.download))) {
                         ((ActivityTestList) activity).downloadTestQuestionaryDetails(testList);
-                       // ((ActivityTestList) activity).zipFileDownload(testList);
+                        // ((ActivityTestList) activity).zipFileDownload(testList);
 
                     } else if (viewHolder.btnOperation.getText().equals(activity.getResources().getText(R.string.upload))) {
                         ((ActivityTestList) activity).uploadRecords(testList);
@@ -156,6 +160,21 @@ public class AdapterExamList extends BaseAdapter {
                         intent.putExtra(C.SCHEDULE_ID_PK, testList.getUniqueID());
                         activity.startActivity(intent);
                     }
+
+                } else {
+                    Util.enableGPS(activity);
+                }
+            }
+        });
+        viewHolder.btnStartTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (Util.isGPSEnabled(activity)) {
+
+                    SharedPreference.getInstance(activity).setTest(C.ONGOING_TEST, testList);
+                   ((ActivityTestList) activity).startTestOnline(testList);
+
 
                 } else {
                     Util.enableGPS(activity);
@@ -177,6 +196,8 @@ public class AdapterExamList extends BaseAdapter {
         TextView tvTestName;
         @BindView(R.id.btnOperation)
         Button btnOperation;
+        @BindView(R.id.btnStartTest)
+        Button btnStartTest;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
