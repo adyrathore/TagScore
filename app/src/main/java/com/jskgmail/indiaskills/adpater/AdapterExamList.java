@@ -127,7 +127,6 @@ public class AdapterExamList extends BaseAdapter {
                 viewHolder.btnOperation.setText(R.string.upload);
                 viewHolder.btnOperation.setEnabled(false);
             } else {
-
                 viewHolder.ivTestStatus.setVisibility(View.GONE);
                 viewHolder.btnOperation.setText(R.string.take_test);
                 viewHolder.btnOperation.setEnabled(true);
