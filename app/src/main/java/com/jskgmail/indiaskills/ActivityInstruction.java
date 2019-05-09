@@ -488,7 +488,7 @@ public class ActivityInstruction extends AppCompatActivity {
             JSONArray subObjDetails = jsonobj_2.getJSONArray("Instructions");
             for (int j = 0; j < subObjDetails.length(); j++) {
                 JSONObject jsonobj_2_answer = (JSONObject) subObjDetails.get(j);
-                instructions = jsonobj_2_answer.get("instruction").toString();
+                instructions = jsonobj_2_answer.get("Instruction").toString();
                 view.setText(instructions);
             }
             if (instructions.equalsIgnoreCase("")) {

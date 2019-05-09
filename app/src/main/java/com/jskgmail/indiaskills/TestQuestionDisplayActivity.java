@@ -509,8 +509,16 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 break;
             case R.id.btn_nextquestion:
 
-                Globalclass.tempQuestionNo = Globalclass.guestioncount + 1;
-                next();
+                if(submitWithoutAttemptAll.equals(C.NO) && moveToPrev.equals(C.NO) && answeroptionval.isEmpty()) {
+                    if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
+                        showMessage("", "आगे बढ़ने के लिए उत्तर दें");
+                    } else {
+                        showMessage("", "Please Give Answer to Move Next");
+                    }                }
+                else {
+                    Globalclass.tempQuestionNo = Globalclass.guestioncount + 1;
+                    next();
+                }
 
                 if (timer != null) {
                     timer.cancel();
@@ -799,7 +807,11 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                         savevalues();
                     } else {
                         if (activeDetails.equalsIgnoreCase("0")) {
-                            if (answeroptionval.equalsIgnoreCase("") && submitWithoutAttemptAll.equals(C.NO)) {
+                            if (isSubmit) {
+                                boolean b = db.insert_logdetails(Globalclass.idcandidate, testList.getId(), sId, SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getUserID(), reviewquestion, str, answeroptionval);
+                                savevalues();
+                            }
+                            else if (answeroptionval.equalsIgnoreCase("")) {
 
                                 removeViews();
                                 new LongOperationgetquestiondetails().execute();
@@ -809,7 +821,12 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                             }
                         } else if (activeDetails.equalsIgnoreCase("1")) {
 
-                            if (answeroptionval.equalsIgnoreCase("")) {
+                            if(isSubmit)
+                            {
+                                boolean b = db.insert_logdetails(Globalclass.idcandidate, testList.getId(), sId, SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getUserID(), reviewquestion, str, answeroptionval);
+                                savevalues();
+                            }
+                            else if (answeroptionval.equalsIgnoreCase("")) {
                                 removeViews();
                                 new LongOperationgetquestiondetails().execute();
                             } else {
@@ -838,7 +855,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 }
                 boolean succ;
 
-                if (submitWithoutAttemptAll.equals(C.NO)) {
 
                     if (activeDetails.equalsIgnoreCase("0")) {
                         succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
@@ -851,9 +867,10 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                         succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "rangemark", "1", activeDetails, answeroptionnoval);
 
                     }
-                }else {
-                    succ=true;
+                if( submitWithoutAttemptAll.equals(C.YES)) {
+                    succ = true;
                 }
+
                 if (succ) {
                     if (isSubmit) {
                         if (activeDetails.equalsIgnoreCase("1")) {
@@ -973,7 +990,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                     bookmarkflag = 1;
                 }
                 boolean success;
-                if (submitWithoutAttemptAll.equals(C.NO)) {
                     if (activeDetails.equalsIgnoreCase("0")) {
                         success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
                     } else {
@@ -984,9 +1000,9 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                         }
                         success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, "1", activeDetails, answeroptionnoval);
                     }
-                } else {
-                    success = true;
-                }
+               if( submitWithoutAttemptAll.equals(C.YES)) {
+                   success = true;
+               }
                 if (success == true) {
                     if (isSubmit) {
                         if (activeDetails.equalsIgnoreCase("1")) {
@@ -2230,6 +2246,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
             e.printStackTrace();
         }
     }
+
     public void showBeforeSubmit(String title, String Message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -2244,6 +2261,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         builder.setMessage(Message);
         builder.show();
     }
+
     public void showMessage(String title, String Message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -2590,7 +2608,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
     @Override
     public void onBackPressed() {
-
+        Globalclass.guestioncount = 0;
         super.onBackPressed();
     }
 
