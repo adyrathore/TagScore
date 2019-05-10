@@ -128,6 +128,7 @@ public class ActivityAnnexureM extends AppCompatActivity implements ProgressRequ
         ButterKnife.bind(this);
         name = SharedPreference.getInstance(ActivityAnnexureM.this).getString(C.USERNAME);
 
+
         if (!Util.isNetworkAvailable(this)) {
             Util.ONLINE = false;
         }
