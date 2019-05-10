@@ -99,6 +99,7 @@ public class ActivityInstruction extends AppCompatActivity {
         setContentView(R.layout.activity_instruction);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -171,6 +172,7 @@ public class ActivityInstruction extends AppCompatActivity {
                             public void onClick(DialogInterface dialogBox, int id) {
                                 // ToDo get user input here
                                 String user = userInputDialogEditText.getText().toString();
+                                Globalclass.tempQuestionNo = 0;
                                 if (Util.ONLINE) {
                                     if (user.equalsIgnoreCase(name)) {
 //                                        int value = spinner.getSelectedItemPosition();

@@ -98,7 +98,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 
-public class ActivityTestList extends AppCompatActivity  {
+public class ActivityTestList extends AppCompatActivity {
 
     @BindView(R.id.imgforconnet)
     ImageView imgforconnet;
@@ -824,6 +824,7 @@ public class ActivityTestList extends AppCompatActivity  {
                 if (response.isSuccessful()) {
                     Log.e("DEBUG", "Got the body for the file");
 
+                    if(!isOnline)
                     Toast.makeText(getApplicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
 
                     downloadZipFileTask = new DownloadZipFileTask(testList);
@@ -831,7 +832,7 @@ public class ActivityTestList extends AppCompatActivity  {
 
                 } else {
                     Log.d("DEBUG", "Connection failed " + response.errorBody());
-                    gotoNextScreen(onlineRes,testList);
+                    gotoNextScreen(onlineRes, testList);
                 }
             }
 
@@ -874,7 +875,8 @@ public class ActivityTestList extends AppCompatActivity  {
             Log.d("API123", progress[0].second + " ");
 
             if (progress[0].first == 100) {
-                Toast.makeText(getApplicationContext(), "File downloaded successfully", Toast.LENGTH_SHORT).show();
+                if (!isOnline)
+                    Toast.makeText(getApplicationContext(), "File downloaded successfully", Toast.LENGTH_SHORT).show();
                 dismissProgressDialog();
             }
 
@@ -929,7 +931,7 @@ public class ActivityTestList extends AppCompatActivity  {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = Util.getProgressDialog(ActivityTestList.this, R.string.unziping_file);
+            progressDialog = Util.getProgressDialog(ActivityTestList.this, isOnline ? R.string.please_wait : R.string.unziping_file);
             progressDialog.show();
         }
 
@@ -1072,7 +1074,7 @@ public class ActivityTestList extends AppCompatActivity  {
         downloadingZipProgress = new ProgressDialog(ActivityTestList.this);
         downloadingZipProgress.setMax(100);
         downloadingZipProgress.setCanceledOnTouchOutside(false);
-        downloadingZipProgress.setTitle("Downloading... Please wait.");
+        downloadingZipProgress.setTitle((!isOnline?"Downloading...":"")+ "Please wait...");
         downloadingZipProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         downloadingZipProgress.show();
 

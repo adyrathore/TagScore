@@ -112,7 +112,7 @@ public class ActivitySplash extends AppCompatActivity {
             }
                 // close this activity
             }
-        }, 1000);
+        }, 100);
 
     }
 

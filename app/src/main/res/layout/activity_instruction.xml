@@ -24,6 +24,14 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme">
 
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:text="@string/select_candidate"
+                android:textColor="@color/white" />
 
         </android.support.v7.widget.Toolbar>
 

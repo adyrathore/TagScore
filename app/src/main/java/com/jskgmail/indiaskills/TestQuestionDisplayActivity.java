@@ -2608,7 +2608,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
     @Override
     public void onBackPressed() {
-        Globalclass.guestioncount = 0;
         super.onBackPressed();
     }
 

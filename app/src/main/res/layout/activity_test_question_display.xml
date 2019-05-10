@@ -30,7 +30,7 @@
             android:minWidth="200dp"
             android:text="@string/SUBMIT"
             android:textColor="#fff"
-            android:theme="@style/blue" />
+            android:theme="@style/PrimaryButton" />
 
         <LinearLayout
             android:layout_width="wrap_content"
