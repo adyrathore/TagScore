@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/StartAssessment"
                     android:textColor="#fff"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

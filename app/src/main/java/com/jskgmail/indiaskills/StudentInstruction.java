@@ -11,7 +11,9 @@ import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -31,6 +33,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.BindView;
+
 public class StudentInstruction extends AppCompatActivity {
     Button btnTestStart;
     TextView view;
@@ -43,6 +47,7 @@ public class StudentInstruction extends AppCompatActivity {
     TestList testList;
     String activeDetails;
     private AdapterInstructions adapterInstructions;
+    android.support.v7.widget.Toolbar toolbar;
 
     public void GPSStatus() {
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -53,6 +58,13 @@ public class StudentInstruction extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_instruction);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         view = (TextView) findViewById(R.id.txt_instruction);
         testList = (TestList) getIntent().getSerializableExtra(C.TEST);
         activeDetails = getIntent().getStringExtra(C.ACTIVE_DETAILS);
@@ -67,6 +79,8 @@ public class StudentInstruction extends AppCompatActivity {
             public void onClick(View v) {
                 GPSStatus();
                 Globalclass.tempQuestionNo = 0;
+                Globalclass.guestioncount = 0;
+
                 if (GpsStatus == true) {
                     Intent intent = new Intent(StudentInstruction.this, TestQuestionDisplayActivity.class);
                     intent.putExtra(C.TEST, testList);
@@ -202,5 +216,14 @@ public class StudentInstruction extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+           onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

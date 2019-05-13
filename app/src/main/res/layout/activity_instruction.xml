@@ -28,7 +28,8 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                android:gravity="center"
+                android:layout_marginRight="40dp"
                 android:textSize="18sp"
                 android:text="@string/select_candidate"
                 android:textColor="@color/white" />

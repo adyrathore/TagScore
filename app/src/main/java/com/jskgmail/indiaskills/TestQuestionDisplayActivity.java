@@ -203,6 +203,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
     private String timeFrequency = "";
     private Timer timer;
     private String submitWithoutAttemptAll;
+    private Dialog progressDialogUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -509,13 +510,13 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 break;
             case R.id.btn_nextquestion:
 
-                if(submitWithoutAttemptAll.equals(C.NO) && moveToPrev.equals(C.NO) && answeroptionval.isEmpty()) {
+                if (submitWithoutAttemptAll.equals(C.NO) && moveToPrev.equals(C.NO) && answeroptionval.isEmpty()) {
                     if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
                         showMessage("", "आगे बढ़ने के लिए उत्तर दें");
                     } else {
                         showMessage("", "Please Give Answer to Move Next");
-                    }                }
-                else {
+                    }
+                } else {
                     Globalclass.tempQuestionNo = Globalclass.guestioncount + 1;
                     next();
                 }
@@ -810,8 +811,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                             if (isSubmit) {
                                 boolean b = db.insert_logdetails(Globalclass.idcandidate, testList.getId(), sId, SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getUserID(), reviewquestion, str, answeroptionval);
                                 savevalues();
-                            }
-                            else if (answeroptionval.equalsIgnoreCase("")) {
+                            } else if (answeroptionval.equalsIgnoreCase("")&& answeroptionnoval.equalsIgnoreCase("")) {
 
                                 removeViews();
                                 new LongOperationgetquestiondetails().execute();
@@ -821,12 +821,11 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                             }
                         } else if (activeDetails.equalsIgnoreCase("1")) {
 
-                            if(isSubmit)
-                            {
+                            if (isSubmit) {
                                 boolean b = db.insert_logdetails(Globalclass.idcandidate, testList.getId(), sId, SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getUserID(), reviewquestion, str, answeroptionval);
                                 savevalues();
-                            }
-                            else if (answeroptionval.equalsIgnoreCase("")) {
+                            } else if (answeroptionval.equalsIgnoreCase("") && answeroptionnoval.equalsIgnoreCase("")) {
+                                countDownTimer
                                 removeViews();
                                 new LongOperationgetquestiondetails().execute();
                             } else {
@@ -856,18 +855,18 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 boolean succ;
 
 
-                    if (activeDetails.equalsIgnoreCase("0")) {
-                        succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
-                    } else {
-                        String rangemark = "";
-                        String strquestion[] = answeroptionval.split(",");
-                        for (int i = 0; i < strquestion.length; i++) {
-                            rangemark = "100" + "," + rangemark;
-                        }
-                        succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "rangemark", "1", activeDetails, answeroptionnoval);
-
+                if (activeDetails.equalsIgnoreCase("0")) {
+                    succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
+                } else {
+                    String rangemark = "";
+                    String strquestion[] = answeroptionval.split(",");
+                    for (int i = 0; i < strquestion.length; i++) {
+                        rangemark = "100" + "," + rangemark;
                     }
-                if( submitWithoutAttemptAll.equals(C.YES)) {
+                    succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "rangemark", "1", activeDetails, answeroptionnoval);
+
+                }
+                if (submitWithoutAttemptAll.equals(C.YES)) {
                     succ = true;
                 }
 
@@ -990,19 +989,19 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                     bookmarkflag = 1;
                 }
                 boolean success;
-                    if (activeDetails.equalsIgnoreCase("0")) {
-                        success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
-                    } else {
-                        String rangemark = "";
-                        String strquestion[] = answeroptionval.split(",");
-                        for (int i = 0; i < strquestion.length; i++) {
-                            rangemark = "100" + "," + rangemark;
-                        }
-                        success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, "1", activeDetails, answeroptionnoval);
+                if (activeDetails.equalsIgnoreCase("0")) {
+                    success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
+                } else {
+                    String rangemark = "";
+                    String strquestion[] = answeroptionval.split(",");
+                    for (int i = 0; i < strquestion.length; i++) {
+                        rangemark = "100" + "," + rangemark;
                     }
-               if( submitWithoutAttemptAll.equals(C.YES)) {
-                   success = true;
-               }
+                    success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, "1", activeDetails, answeroptionnoval);
+                }
+                if (submitWithoutAttemptAll.equals(C.YES)) {
+                    success = true;
+                }
                 if (success == true) {
                     if (isSubmit) {
                         if (activeDetails.equalsIgnoreCase("1")) {
@@ -1133,8 +1132,8 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
     private void uploadBitmap(final String imageurlval, final String tagidval, String nameimageval, String targetid, final String imagetypeval, String nameimageorg) {
         try {
             shutdown();
-            progressDialog = Util.getProgressDialog(this, R.string.uploading_video_please_wait);
-            progressDialog.show();
+            progressDialogUp = Util.getProgressDialog(this, R.string.uploading_video_please_wait);
+            progressDialogUp.show();
             File file = new File(imageurlval);
             // Uri fileUri  =  Uri.fromFile(new File(filPath));
             ResponseLogin responseLogin = SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER);
@@ -1188,7 +1187,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
             call.enqueue(new Callback<UploadZipResponse>() {
                 @Override
                 public void onResponse(Call<UploadZipResponse> call, retrofit2.Response<UploadZipResponse> response) {
-                    progressDialog.dismiss();
+                    progressDialogUp.dismiss();
                     currentbookmark = "0";
                     isbookmark = "";
                     reviewquestion = "";
@@ -1202,7 +1201,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
                 @Override
                 public void onFailure(Call<UploadZipResponse> call, Throwable t) {
-                    progressDialog.dismiss();
+                    progressDialogUp.dismiss();
                     gotoNextQuestionForPractical();
                 }
             });
@@ -2221,6 +2220,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         try {
             if (isVideoRecord.equals("1")) {
                 if (mCamera != null) {
+                    countDownTimer.cancel();
                     mMediaRecorder.reset();
                     mMediaRecorder.release();
                     mCamera.release();
@@ -2335,9 +2335,16 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 if (bookmarkreviewcountvalue == lastquestiontoview - 1) {
                     if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
                         btnReviewBookmark.setText(R.string.SUBMIThn);
+
                     } else {
                         btnReviewBookmark.setText("Submit");
+
                     }
+                    btnSubmitTest.getLayoutParams().width = 0;
+                    btnSubmitTest.getLayoutParams().height = 0;
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPriviousquestion.getLayoutParams();
+                    layoutParams.setMargins(0, 0, 0, 0);
+                    btnSubmitTest.setBackground(null);
                 }
                 new LongOperationgetquestiondetails().execute();
             } else {
@@ -2423,9 +2430,16 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                         if (bookmarkreviewcountvalue == lastquestiontoview - 1) {
                             if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
                                 btnReviewBookmark.setText(R.string.SUBMIThn);
+
                             } else {
                                 btnReviewBookmark.setText("Submit");
+
                             }
+                            btnSubmitTest.getLayoutParams().width = 0;
+                            btnSubmitTest.getLayoutParams().height = 0;
+                            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPriviousquestion.getLayoutParams();
+                            layoutParams.setMargins(0, 0, 0, 0);
+                            btnSubmitTest.setBackground(null);
                         }
                         int id = Integer.parseInt(bookmarkreview.get(bookmarkreviewcountvalue));
                         Globalclass.tempQuestionNo = id;

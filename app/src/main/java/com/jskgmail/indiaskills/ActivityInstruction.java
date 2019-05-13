@@ -173,6 +173,8 @@ public class ActivityInstruction extends AppCompatActivity {
                                 // ToDo get user input here
                                 String user = userInputDialogEditText.getText().toString();
                                 Globalclass.tempQuestionNo = 0;
+                                Globalclass.guestioncount = 0;
+
                                 if (Util.ONLINE) {
                                     if (user.equalsIgnoreCase(name)) {
 //                                        int value = spinner.getSelectedItemPosition();

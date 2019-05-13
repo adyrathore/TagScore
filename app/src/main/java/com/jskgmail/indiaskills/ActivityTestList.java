@@ -31,6 +31,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -323,7 +324,7 @@ public class ActivityTestList extends AppCompatActivity {
                 @Override
                 public void notifySuccess(String requestType, String response) {
 
-                    progressDialog.dismiss();
+                   // progressDialog.dismiss();
 
                     try {
                         Log.e("Data response", String.valueOf(response.toString()));
@@ -369,6 +370,7 @@ public class ActivityTestList extends AppCompatActivity {
                         zipFileDownload(response, testList);
                     } catch (Exception e) {
 
+                        progressDialog.dismiss();
                         e.printStackTrace();
                     }
                 }
@@ -409,7 +411,7 @@ public class ActivityTestList extends AppCompatActivity {
                 @Override
                 public void notifySuccess(String requestType, String response) {
 
-                    progressDialog.dismiss();
+//                    progressDialog.dismiss();
 
                     try {
 
@@ -452,10 +454,7 @@ public class ActivityTestList extends AppCompatActivity {
 
                             }
 
-                            if (adapterExamList != null) {
-                                adapterExamList.notifyDataSetChanged();
-                                //   Util.showMessage(ActivityTestList.this,R.string.successfully_download);
-                            }
+
                             zipFileDownload(response, testList);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -479,8 +478,10 @@ public class ActivityTestList extends AppCompatActivity {
     }
 
     public void zipFileDownload(final String res, final TestList testList) {
-        progressDialog = Util.getProgressDialog(this, R.string.please_wait);
-        progressDialog.show();
+        if (progressDialog == null)
+            progressDialog = Util.getProgressDialog(this, R.string.please_wait);
+        if (!progressDialog.isShowing())
+            progressDialog.show();
         ResponseLogin responseLogin = SharedPreference.getInstance(this).getUser(C.LOGIN_USER);
         final TestDetailRequest testDetailRequest = new TestDetailRequest();
         testDetailRequest.setApiKey(responseLogin.getApiKey());
@@ -501,8 +502,8 @@ public class ActivityTestList extends AppCompatActivity {
         volleyService.postDataVolley(new IResult() {
             @Override
             public void notifySuccess(String requestType, String response) {
-
-                progressDialog.dismiss();
+                if (!isOnline)
+                    progressDialog.dismiss();
 
                 try {
 
@@ -824,8 +825,8 @@ public class ActivityTestList extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.e("DEBUG", "Got the body for the file");
 
-                    if(!isOnline)
-                    Toast.makeText(getApplicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
+                    if (!isOnline)
+                        Toast.makeText(getApplicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
 
                     downloadZipFileTask = new DownloadZipFileTask(testList);
                     downloadZipFileTask.execute(response.body());
@@ -872,22 +873,25 @@ public class ActivityTestList extends AppCompatActivity {
 
         protected void onProgressUpdate(Pair<Integer, Long>... progress) {
 
-            Log.d("API123", progress[0].second + " ");
+            if (!isOnline) {
+                Log.d("API123", progress[0].second + " ");
 
-            if (progress[0].first == 100) {
-                if (!isOnline)
-                    Toast.makeText(getApplicationContext(), "File downloaded successfully", Toast.LENGTH_SHORT).show();
-                dismissProgressDialog();
+                if (progress[0].first == 100) {
+                    if (!isOnline) {
+                        Toast.makeText(getApplicationContext(), "File downloaded successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+                    dismissProgressDialog();
+                }
+
+                if (progress[0].second > 0) {
+                    int currentProgress = (int) ((double) progress[0].first / (double) progress[0].second * 100);
+                    downloadingZipProgress.setProgress(currentProgress);
+
+                    //   txtProgressPercent.setText("Progress " + currentProgress + "%");
+
+                }
             }
-
-            if (progress[0].second > 0) {
-                int currentProgress = (int) ((double) progress[0].first / (double) progress[0].second * 100);
-                downloadingZipProgress.setProgress(currentProgress);
-
-                //   txtProgressPercent.setText("Progress " + currentProgress + "%");
-
-            }
-
             if (progress[0].first == -1) {
                 Toast.makeText(getApplicationContext(), "Download failed", Toast.LENGTH_SHORT).show();
             }
@@ -931,8 +935,16 @@ public class ActivityTestList extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = Util.getProgressDialog(ActivityTestList.this, isOnline ? R.string.please_wait : R.string.unziping_file);
-            progressDialog.show();
+            if (progressDialog == null) {
+                progressDialog = Util.getProgressDialog(ActivityTestList.this, isOnline ? R.string.please_wait : R.string.unziping_file);
+            }
+            else
+            {
+                TextView text = (TextView) progressDialog.findViewById(R.id.tvMsg);
+                text.setText(isOnline ? R.string.please_wait : R.string.unziping_file);
+            }
+            if (!progressDialog.isShowing())
+                progressDialog.show();
         }
 
         @Override
@@ -945,6 +957,10 @@ public class ActivityTestList extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             progressDialog.hide();
+            if (adapterExamList != null) {
+                adapterExamList.notifyDataSetChanged();
+                //   Util.showMessage(ActivityTestList.this,R.string.successfully_download);
+            }
             if (isOnline) {
                 gotoNextScreen(onlineRes, testList);
             } else {
@@ -959,7 +975,9 @@ public class ActivityTestList extends AppCompatActivity {
     }
 
     void gotoNextScreen(String response, TestList testList) {
+
         try {
+            progressDialog.dismiss();
             final ResponseLogin responseLogin = SharedPreference.getInstance(this).getUser(C.LOGIN_USER);
 
             String res = response.toString();
@@ -1074,9 +1092,10 @@ public class ActivityTestList extends AppCompatActivity {
         downloadingZipProgress = new ProgressDialog(ActivityTestList.this);
         downloadingZipProgress.setMax(100);
         downloadingZipProgress.setCanceledOnTouchOutside(false);
-        downloadingZipProgress.setTitle((!isOnline?"Downloading...":"")+ "Please wait...");
+        downloadingZipProgress.setTitle((!isOnline ? "Downloading..." : "") + "Please wait...");
         downloadingZipProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        downloadingZipProgress.show();
+        if (!isOnline)
+            downloadingZipProgress.show();
 
     }
 
