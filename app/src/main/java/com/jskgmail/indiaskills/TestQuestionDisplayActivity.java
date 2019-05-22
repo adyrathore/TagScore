@@ -377,16 +377,17 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         spnLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (Globalclass.countlanguage.equalsIgnoreCase("0")) {
+
+//                if (Globalclass.countlanguage.equalsIgnoreCase("0")) {
                     if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
-                        if (Globalclass.hindipresent.equalsIgnoreCase("1")) {
-                            spnLanguage.setSelection(spinnerArrayAdapter.getPosition("Hindi"));
-                        } else {
-                            spnLanguage.setSelection(spinnerArrayAdapter.getPosition("English"));
-                        }
+//                        if (Globalclass.hindipresent.equalsIgnoreCase("1")) {
+//                            spnLanguage.setSelection(spinnerArrayAdapter.getPosition("Hindi"));
+//                        } else {
+//                            spnLanguage.setSelection(spinnerArrayAdapter.getPosition("English"));
+//                        }
                         Globalclass.countlanguage = "1";
                     }
-                }
+//                }
                 String strval = spnLanguage.getSelectedItem().toString();
                 if (strval.equalsIgnoreCase("English")) {
                     insertLogHistory(testquestionid.getText().toString(), C.Event_Change_Language, Util.getCurrentDateTime(), testList.getId(), activeDetails, Globalclass.idcandidate);
@@ -426,6 +427,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         });
 
     }
+
 
     public boolean getlanguagevalues(String values) {
         Boolean success = false;
@@ -811,7 +813,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                             if (isSubmit) {
                                 boolean b = db.insert_logdetails(Globalclass.idcandidate, testList.getId(), sId, SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getUserID(), reviewquestion, str, answeroptionval);
                                 savevalues();
-                            } else if (answeroptionval.equalsIgnoreCase("")&& answeroptionnoval.equalsIgnoreCase("")) {
+                            } else if (answeroptionval.equalsIgnoreCase("") && answeroptionnoval.equalsIgnoreCase("")) {
 
                                 removeViews();
                                 new LongOperationgetquestiondetails().execute();
@@ -825,7 +827,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                                 boolean b = db.insert_logdetails(Globalclass.idcandidate, testList.getId(), sId, SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getUserID(), reviewquestion, str, answeroptionval);
                                 savevalues();
                             } else if (answeroptionval.equalsIgnoreCase("") && answeroptionnoval.equalsIgnoreCase("")) {
-                                countDownTimer
                                 removeViews();
                                 new LongOperationgetquestiondetails().execute();
                             } else {
@@ -891,38 +892,38 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                             }
                         } else {
                             if (!getIsAnyBookMarkQuestionAvailable()) {
-                                if (reviewquestion.equalsIgnoreCase("1")) {
-                                    showMessage("", "You Didn't Answer Some Question Please Attempt All Question");
-                                } else {
-                                    Boolean success = databaseHelper.insertData_tablebatchdetails(testList.getId(), Globalclass.userids, "0", "0", Globalclass.userids, sId, activeDetails, "0");
-                                    if (success == true) {
-                                        boolean successval = databaseHelper.insertData_tablebatchdetails(testList.getId(), Globalclass.userids, Globalclass.userids, Globalclass.userids, Globalclass.userids, sId, activeDetails, "0");
-                                        if (successval == true) {
-                                            setConstants();
-                                            if (activeDetails.equalsIgnoreCase("1")) {
-                                                if (Util.ONLINE) {
-                                                    uploadBitmap(VIDEO_PATH_NAME, sId, filename, sId, "video", filename);
-                                                } else {
-                                                    success = databaseHelper.insert_imagesval("Video", "non", filename, testList.getId(), VIDEO_PATH_NAME, sId, sId);
-                                                    if (!success) {
-                                                        Toast.makeText(TestQuestionDisplayActivity.this, "Not able to save ", Toast.LENGTH_LONG).show();
-                                                    }
-                                                }
-                                                if (isVideoRecord.equals("1")) {
-                                                    mMediaRecorder.reset();
-                                                    mCamera.release();
+//                                if (reviewquestion.equalsIgnoreCase("1")) {
+//                                    showMessage("", "You Didn't Answer Some Question Please Attempt All Question");
+//                                } else {
+                                Boolean success = databaseHelper.insertData_tablebatchdetails(testList.getId(), Globalclass.userids, "0", "0", Globalclass.userids, sId, activeDetails, "0");
+                                if (success == true) {
+                                    boolean successval = databaseHelper.insertData_tablebatchdetails(testList.getId(), Globalclass.userids, Globalclass.userids, Globalclass.userids, Globalclass.userids, sId, activeDetails, "0");
+                                    if (successval == true) {
+                                        setConstants();
+                                        if (activeDetails.equalsIgnoreCase("1")) {
+                                            if (Util.ONLINE) {
+                                                uploadBitmap(VIDEO_PATH_NAME, sId, filename, sId, "video", filename);
+                                            } else {
+                                                success = databaseHelper.insert_imagesval("Video", "non", filename, testList.getId(), VIDEO_PATH_NAME, sId, sId);
+                                                if (!success) {
+                                                    Toast.makeText(TestQuestionDisplayActivity.this, "Not able to save ", Toast.LENGTH_LONG).show();
                                                 }
                                             }
-                                            openPhotoCaptureActivity();
-
-
-                                        } else {
-                                            showMessage("", "Unable to submit test");
+                                            if (isVideoRecord.equals("1")) {
+                                                mMediaRecorder.reset();
+                                                mCamera.release();
+                                            }
                                         }
+                                        openPhotoCaptureActivity();
+
+
                                     } else {
-                                        showMessage("Oppps", "Somthing went wrong ...");
+                                        showMessage("", "Unable to submit test");
                                     }
+                                } else {
+                                    showMessage("Oppps", "Somthing went wrong ...");
                                 }
+//                                }
                             } else {
                                 gotoBookMarkQuestions();
                             }
@@ -1028,39 +1029,39 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
 
                             if (!getIsAnyBookMarkQuestionAvailable()) {
-                                if (reviewquestion.equalsIgnoreCase("1")) {
-                                    showMessage("", "You Didn't Answer Some Question Please Attempt All Question");
-                                } else {
-                                    setupAlarmManagerstop();
-                                    Globalclass.lastpicturecandidate = "1";
+//                                if (reviewquestion.equalsIgnoreCase("1")) {
+//                                    showMessage("", "You Didn't Answer Some Question Please Attempt All Question");
+//                                } else {
+                                setupAlarmManagerstop();
+                                Globalclass.lastpicturecandidate = "1";
 
-                                    boolean successval = databaseHelper.insertData_tablebatchdetails(testList.getId(), Globalclass.userids, Globalclass.userids, Globalclass.userids, Globalclass.userids, sId, activeDetails, "0");
-                                    if (successval == true) {
+                                boolean successval = databaseHelper.insertData_tablebatchdetails(testList.getId(), Globalclass.userids, Globalclass.userids, Globalclass.userids, Globalclass.userids, sId, activeDetails, "0");
+                                if (successval == true) {
 
-                                        if (Util.ONLINE) {
-                                            if (activeDetails.equalsIgnoreCase("1")) {
-                                                uploadBitmap(VIDEO_PATH_NAME, sId, filename, sId, "video", filename);
-                                            }
-                                        } else {
-                                            if (activeDetails.equalsIgnoreCase("1")) {
-                                                success = databaseHelper.insert_imagesval("Video", "non", filename, testList.getId(), VIDEO_PATH_NAME, sId, sId);
-                                                if (!success) {
-                                                    Toast.makeText(TestQuestionDisplayActivity.this, "Not able to save ", Toast.LENGTH_LONG).show();
-                                                }
-                                                if (isVideoRecord.equals("1")) {
-                                                    mMediaRecorder.reset();
-                                                    mCamera.release();
-                                                }
-                                            }
-
+                                    if (Util.ONLINE) {
+                                        if (activeDetails.equalsIgnoreCase("1")) {
+                                            uploadBitmap(VIDEO_PATH_NAME, sId, filename, sId, "video", filename);
                                         }
-                                        setConstants();
-                                        openPhotoCaptureActivity();
-
                                     } else {
-                                        showMessage("", "Unable to submit test");
+                                        if (activeDetails.equalsIgnoreCase("1")) {
+                                            success = databaseHelper.insert_imagesval("Video", "non", filename, testList.getId(), VIDEO_PATH_NAME, sId, sId);
+                                            if (!success) {
+                                                Toast.makeText(TestQuestionDisplayActivity.this, "Not able to save ", Toast.LENGTH_LONG).show();
+                                            }
+                                            if (isVideoRecord.equals("1")) {
+                                                mMediaRecorder.reset();
+                                                mCamera.release();
+                                            }
+                                        }
+
                                     }
+                                    setConstants();
+                                    openPhotoCaptureActivity();
+
+                                } else {
+                                    showMessage("", "Unable to submit test");
                                 }
+//                                }
 
                             } else {
                                 gotoBookMarkQuestions();
@@ -1207,6 +1208,8 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
             });
         } catch (Exception e) {
             e.printStackTrace();
+            progressDialogUp.dismiss();
+            gotoNextQuestionForPractical();
         }
         //finally performing the call
     }
@@ -2175,6 +2178,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 mMediaRecorder.setPreviewDisplay(surface);
                 //mSurfaceView.setRotation(90);
                 mMediaRecorder.setCamera(mCamera);
+                mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
                 mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
                 //       mMediaRecorder.setOutputFormat(8);
                 mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
@@ -2183,6 +2187,8 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 mMediaRecorder.setVideoFrameRate(30);
                 //   mMediaRecorder.setOrientationHint(180);
                 mMediaRecorder.setVideoSize(640, 480);
+                mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+
                 mMediaRecorder.setOutputFile(VIDEO_PATH_NAME);
                 // getOutputMediaFile(MEDIA_TYPE_VIDEO);
                 try {
@@ -2479,7 +2485,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
     }
 
     void insertLogHistory(String Questionid, String event, String timestamp, String testid, String activedetails, String userID) {
-        databaseHelper.insertLogHistory(Questionid, event, timestamp, testid, activedetails, Globalclass.idcandidate);
+        databaseHelper.insertLogHistory(Questionid, event, System.currentTimeMillis()+"", testid, activedetails, Globalclass.idcandidate);
     }
 
 
@@ -2496,6 +2502,12 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
+            spnLanguage.setSelection(spinnerArrayAdapter.getPosition("Hindi"));
+        } else {
+            spnLanguage.setSelection(spinnerArrayAdapter.getPosition("English"));
+        }
         if (videoView != null && videoView.getVisibility() == View.VISIBLE) {
             if (videoView.isPlaying()) {
                 videoView.resume();

@@ -138,10 +138,8 @@ public class CameraManager implements Camera.ErrorCallback, Camera.PreviewCallba
     private void releaseCamera() {
         try {
             if (mCamera != null) {
-                mCamera.stopPreview();
-                mCamera.setPreviewCallback(null);
-                mSurface.release();
                 mCamera.release();
+                mSurface.release();
                 mCamera = null;
                 mSurface = null;
             }

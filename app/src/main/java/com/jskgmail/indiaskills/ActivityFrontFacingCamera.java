@@ -267,7 +267,7 @@ public class ActivityFrontFacingCamera extends AppCompatActivity implements Prog
         RequestBody api_key = RequestBody.create(MediaType.parse("text/plain"), responseLogin.getApiKey());
         RequestBody testID = RequestBody.create(MediaType.parse("text/plain"), testList.getId());
         RequestBody uniqueID = RequestBody.create(MediaType.parse("text/plain"), testList.getUniqueID());
-        RequestBody picType = RequestBody.create(MediaType.parse("text/plain"), imagetypeval);
+        RequestBody picType = RequestBody.create(MediaType.parse("text/plain"), imagetypeval.replace("-",""));
         RequestBody candidate_id = RequestBody.create(MediaType.parse("text/plain"), tagidval);
         RequestBody version = RequestBody.create(MediaType.parse("text/plain"), "m");
         RequestBody target_dir = RequestBody.create(MediaType.parse("text/plain"), targetid);

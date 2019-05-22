@@ -50,6 +50,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.READ_PHONE_STATE;
+import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class ActivitySplash extends AppCompatActivity {
@@ -57,24 +58,23 @@ public class ActivitySplash extends AppCompatActivity {
     public static final int RequestPermissionCode = 1;
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     TextView tvVersionCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         img = (ImageView) findViewById(R.id.imgLogo);
         tvVersionCode = (TextView) findViewById(R.id.tvVersionCode);
-        if(BuildConfig.FLAVOR_app.equals(C.MEPSCLogo)) {
+        if (BuildConfig.FLAVOR_app.equals(C.MEPSCLogo)) {
             img.setImageResource(R.drawable.mepsc_logo);
-        }
-        else {
+        } else {
             img.setImageResource(R.drawable.logo);
 
         }
         try {
-            tvVersionCode.setText("Version "+Util.getVersionInfo(this));
+            tvVersionCode.setText("Version " + Util.getVersionInfo(this));
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -97,19 +97,18 @@ public class ActivitySplash extends AppCompatActivity {
                 // This method will be executed once the timer is over
                 // Start your app main activity
                 if (isGpsEnabled()) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkPermission()) {
-                        gotoMainActivity();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkPermission()) {
+                            gotoMainActivity();
+                        } else {
+                            requestPermission();
+                        }
                     } else {
-                        requestPermission();
+                        gotoMainActivity();
                     }
                 } else {
-                    gotoMainActivity();
+                    displayLocationSettingsRequest();
                 }
-            }
-            else {
-                displayLocationSettingsRequest();
-            }
                 // close this activity
             }
         }, 100);
@@ -117,10 +116,9 @@ public class ActivitySplash extends AppCompatActivity {
     }
 
     void gotoMainActivity() {
-        if(Util.isNetworkAvailable(this)) {
+        if (Util.isNetworkAvailable(this)) {
             getVersion();
-        }
-        else {
+        } else {
             Intent i = new Intent(ActivitySplash.this, ActivityMain.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
@@ -133,7 +131,6 @@ public class ActivitySplash extends AppCompatActivity {
             finish();
         }*/
     }
-
 
 
     @Override
@@ -163,6 +160,7 @@ public class ActivitySplash extends AppCompatActivity {
         int Fourth = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
         int fifth = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_COARSE_LOCATION);
         int sixth = ContextCompat.checkSelfPermission(getApplicationContext(), INTERNET);
+        int seven = ContextCompat.checkSelfPermission(getApplicationContext(),RECORD_AUDIO );
 
 
         return FirstPermissionResult == PackageManager.PERMISSION_GRANTED &&
@@ -170,7 +168,7 @@ public class ActivitySplash extends AppCompatActivity {
                 ThirdPermissionResult == PackageManager.PERMISSION_GRANTED &&
                 Fourth == PackageManager.PERMISSION_GRANTED &&
                 fifth == PackageManager.PERMISSION_GRANTED &&
-                sixth == PackageManager.PERMISSION_GRANTED;
+                sixth == PackageManager.PERMISSION_GRANTED && seven == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission() {
@@ -181,7 +179,8 @@ public class ActivitySplash extends AppCompatActivity {
                         READ_PHONE_STATE,
                         ACCESS_FINE_LOCATION,
                         ACCESS_COARSE_LOCATION,
-                        INTERNET
+                        INTERNET,
+                        RECORD_AUDIO
                 }, RequestPermissionCode);
 
     }
@@ -242,7 +241,7 @@ public class ActivitySplash extends AppCompatActivity {
 
     protected void getVersion() {
 
-        VersionRequest versionRequest=new VersionRequest();
+        VersionRequest versionRequest = new VersionRequest();
         Gson gson = new Gson();
         String json = gson.toJson(versionRequest);
         JSONObject obj = null;
@@ -258,13 +257,12 @@ public class ActivitySplash extends AppCompatActivity {
 
 
                 try {
-                    Log.e("DEBUG","version="+ response);
+                    Log.e("DEBUG", "version=" + response);
                     Gson gson = new Gson();
                     VersionCodeResponse versionCodeResponse = gson.fromJson(response, VersionCodeResponse.class);
-                    if(Integer.parseInt(versionCodeResponse.getVersionCode())!=Util.getVersionCode(ActivitySplash.this)){
+                    if (Integer.parseInt(versionCodeResponse.getVersionCode()) != Util.getVersionCode(ActivitySplash.this)) {
                         showVersionAlert();
-                    }
-                    else {
+                    } else {
                         Intent i = new Intent(ActivitySplash.this, ActivityMain.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
@@ -291,6 +289,7 @@ public class ActivitySplash extends AppCompatActivity {
         }, "version", C.API_VERSION, Util.getHeader(), obj);
 
     }
+
     private void showVersionAlert() {
         final AlertDialog.Builder builder1 = new AlertDialog.Builder(ActivitySplash.this);
         //checking version api

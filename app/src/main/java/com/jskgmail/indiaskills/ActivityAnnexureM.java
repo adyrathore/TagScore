@@ -126,7 +126,8 @@ public class ActivityAnnexureM extends AppCompatActivity implements ProgressRequ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_annexure_m);
         ButterKnife.bind(this);
-        name = SharedPreference.getInstance(ActivityAnnexureM.this).getString(C.USERNAME);
+        name = SharedPreference.getInstance(ActivityAnnexureM.this).getUser(C.LOGIN_USER).getUserID();
+
 
         if (!Util.isNetworkAvailable(this)) {
             Util.ONLINE = false;
@@ -1222,9 +1223,9 @@ public class ActivityAnnexureM extends AppCompatActivity implements ProgressRequ
             }
             String strsddata = sd.toString();
             Map<String, String> params = new HashMap<>();
-            params.put("userId", SharedPreference.getInstance(ActivityAnnexureM.this).getUser(C.LOGIN_USER).getUserID());
+            params.put("userId", name);
             params.put("api_key", SharedPreference.getInstance(ActivityAnnexureM.this).getUser(C.LOGIN_USER).getApiKey());
-            params.put("schedule_unique_key", testList.getScheduleIdPk());
+            params.put("schedule_unique_key", testList.getUniqueID());
             params.put("feedback", strsddata.trim());
             Log.e("params :", params.toString());
             // showMessage("message",params.toString());
@@ -1232,49 +1233,51 @@ public class ActivityAnnexureM extends AppCompatActivity implements ProgressRequ
             try {
                 JSONObject jsonObject = new JSONObject(params.toString());
                 Log.e("jsonObject :", jsonObject.toString());
+
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonObject
+                        , new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Dialog1.dismiss();
+                        Log.e("Data response", String.valueOf(response.toString()));
+                        //  boolean bx = myDb.delete_feedbackbyid(testList.getId(), testList.getScheduleIdPk(), Globalclass.userids);
+                        Globalclass.onlineassessorgiven = "1";
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("VolleyError", "Error response", error);
+                        Dialog1.dismiss();
+                        //     boolean bx = myDb.delete_feedbackbyid(testList.getId(), testList.getScheduleIdPk(), name);
+                        finish();
+
+                    }
+                }) {
+
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        HashMap<String, String> headers = new HashMap<>();
+                        String credentials = "tagusp:t@g$c0re";
+                        String auth = "Basic" + " " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                      //  headers.put("Content-Type", "application/json");
+                        headers.put("Authorization", auth);
+                        return headers;
+                    }
+                };
+                String tag_json_obj = "json_obj_req";
+                //   VolleyAppController.getInstance().addToRequestQueue(request, tag_json_obj);
+
+                RetryPolicy policy = new DefaultRetryPolicy(120000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                request.setRetryPolicy(policy);
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                requestQueue.add(request).setTag(tag_json_obj);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params)
-                    , new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Dialog1.dismiss();
-                    Log.e("Data response", String.valueOf(response.toString()));
-                    //  boolean bx = myDb.delete_feedbackbyid(testList.getId(), testList.getScheduleIdPk(), Globalclass.userids);
-                    Globalclass.onlineassessorgiven = "1";
-                    setResult(RESULT_OK);
-                    finish();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("VolleyError", "Error response", error);
-                    Dialog1.dismiss();
-                    //     boolean bx = myDb.delete_feedbackbyid(testList.getId(), testList.getScheduleIdPk(), name);
-                    finish();
-
-                }
-            }) {
-
-                @Override
-                public Map<String, String> getHeaders() {
-                    HashMap<String, String> headers = new HashMap<>();
-                    String credentials = "tagusp:t@g$c0re";
-                    String auth = "Basic" + " " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                    //  headers.put("Content-Type", "application/json");
-                    headers.put("Authorization", auth);
-                    return headers;
-                }
-            };
             // Adding request to request queue
-            String tag_json_obj = "json_obj_req";
-            //   VolleyAppController.getInstance().addToRequestQueue(request, tag_json_obj);
 
-            RetryPolicy policy = new DefaultRetryPolicy(120000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-            request.setRetryPolicy(policy);
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            requestQueue.add(request).setTag(tag_json_obj);
         }
 
     }

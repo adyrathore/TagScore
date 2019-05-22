@@ -1,7 +1,9 @@
 package com.jskgmail.indiaskills;
 
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -49,11 +51,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -70,7 +74,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ActivityLastImageCapture extends AppCompatActivity implements ProgressRequestBody.UploadCallbacks{
+public class ActivityLastImageCapture extends AppCompatActivity implements ProgressRequestBody.UploadCallbacks {
     private static final String TAG = "";
     @BindView(R.id.rlCameraPreview)
     RelativeLayout rlCameraPreview;
@@ -97,8 +101,7 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
             public void onClick(View view) {
                 try {
                     mCamera.takePicture(null, null, mPicture);
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -148,7 +151,6 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
     }
 
 
-
     private int findFrontFacingCamera() {
 
         int cameraId = -1;
@@ -185,29 +187,28 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
     }
 
     public void onResume() {
-         try {
-             super.onResume();
-             releaseCamera();
+        try {
+            super.onResume();
+            releaseCamera();
 
 
-             Handler handler = new Handler();
-             handler.postDelayed(new Runnable() {
-                 @Override
-                 public void run() {
-                     try {
-                         if (mCamera == null) {
-                             openCamera();
-                         }
-                     } catch (Exception e) {
-                         e.printStackTrace();
-                         onResume();
-                     }
-                 }
-             }, 1000);
-         }
-         catch (Exception e){
-             e.printStackTrace();
-         }
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (mCamera == null) {
+                            openCamera();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        onResume();
+                    }
+                }
+            }, 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -228,7 +229,7 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
                 mCamera = Camera.open(cameraId);
                 mCamera.setDisplayOrientation(90);
                 mPicture = getPictureCallback();
-                if(mPreview==null)
+                if (mPreview == null)
                     mPreview = new CameraPreview(this, mCamera);
 
                 mPreview.refreshCamera(mCamera);
@@ -240,7 +241,7 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
                 mCamera = Camera.open(cameraId);
                 mCamera.setDisplayOrientation(90);
                 mPicture = getPictureCallback();
-                if(mPreview==null)
+                if (mPreview == null)
                     mPreview = new CameraPreview(this, mCamera);
                 mPreview.refreshCamera(mCamera);
             }
@@ -296,11 +297,11 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
     }
 
 
-    private void uploadImage(final String imageurlval, final String tagidval, String nameimageval, String targetid, final String imagetypeval,String nameimageorg) {
+    private void uploadImage(final String imageurlval, final String tagidval, String nameimageval, String targetid, final String imagetypeval, String nameimageorg) {
         progressDialog = Util.getProgressDialog(this, R.string.uploading_please_wait);
         progressDialog.show();
-        Log.e("Send zip", imageurlval );
-        File file= new File(imageurlval);
+        Log.e("Send zip", imageurlval);
+        File file = new File(imageurlval);
         // Uri fileUri  =  Uri.fromFile(new File(filPath));
         ResponseLogin responseLogin = SharedPreference.getInstance(ActivityLastImageCapture.this).getUser(C.LOGIN_USER);
 
@@ -316,8 +317,8 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
 
         //  RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         String credentials = "tagusp:t@g$c0re";
-        String auth = "Basic"+" "+ Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-        ProgressRequestBody fileBody = new ProgressRequestBody(file, "multipart/form-data",this);
+        String auth = "Basic" + " " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+        ProgressRequestBody fileBody = new ProgressRequestBody(file, "multipart/form-data", this);
 
         //  RequestBody requestFile = RequestBody.create(MediaType.parse(getActivity().getContentResolver().getType(fileUri)), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("filename", nameimageval, fileBody);
@@ -347,14 +348,14 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
         Api api = retrofit.create(Api.class);
 
         //creating a call and calling the upload image method
-        Call<UploadZipResponse> call = api.uploadImageVideo(auth,body,userId, api_key,testID,uniqueID,picType,candidate_id,version,target_dir);
+        Call<UploadZipResponse> call = api.uploadImageVideo(auth, body, userId, api_key, testID, uniqueID, picType, candidate_id, version, target_dir);
 
         call.enqueue(new Callback<UploadZipResponse>() {
             @Override
             public void onResponse(Call<UploadZipResponse> call, retrofit2.Response<UploadZipResponse> response) {
                 progressDialog.dismiss();
 
-                if (response!=null &&response.body()!=null &&response.body().getResponseCode()!=null &&response.body().getResponseCode().equals("200")) {
+                if (response != null && response.body() != null && response.body().getResponseCode() != null && response.body().getResponseCode().equals("200")) {
                     int camerasNumber = Camera.getNumberOfCameras();
                     if (camerasNumber > 1) {
                         releaseCamera();
@@ -365,8 +366,7 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
                     progressDialog.dismiss();
 
 //                        Util.showMessage(ActivityFrontFacingCamera.this,R.string.image_saved);
-
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(ActivityLastImageCapture.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityLastImageCapture.this);
                     builder.setMessage("Image saved ...");
                     builder.setCancelable(false);
                     builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
@@ -376,7 +376,12 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
 //                                finish();
                         }
                     });
-                    builder.show();
+                    try {
+                        builder.show();
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
 
                 } else {
                     showMessage("", "Unable to upload please try again");
@@ -417,13 +422,13 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
         //finally performing the call
     }
 
-    private void uploadBitmap(final String imageurlval, final String tagidval, final String  nameimageval, final String targetid, final String imagetypeval, String nameimageorg) {
+    private void uploadBitmap(final String imageurlval, final String tagidval, final String nameimageval, final String targetid, final String imagetypeval, String nameimageorg) {
         progressDialog = Util.getProgressDialog(this, R.string.uploading_please_wait);
         progressDialog.show();
 
         //getting the tag from the edittext
         //final String tags = editTextTags.getText().toString().trim();
-        String url=C.API_UPLOAD_VIDEO_AND_PHOTO;
+        String url = C.API_UPLOAD_VIDEO_AND_PHOTO;
         //our custom volley request
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, url,
                 new Response.Listener<NetworkResponse>() {
@@ -479,11 +484,12 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
             public Map<String, String> getHeaders() {
                 HashMap<String, String> headers = new HashMap<>();
                 String credentials = "tagusp:t@g$c0re";
-                String auth = "Basic"+" "+ Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                String auth = "Basic" + " " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
                 //  headers.put("Content-Type", "application/json");
                 headers.put("Authorization", auth);
                 return headers;
             }
+
             /*
              * If you want to add more parameters with the image
              * you can do it here
@@ -509,6 +515,7 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
                 // params.put("imageHash", encodedImage);
                 return params;
             }
+
             /*
              * Here we are passing image by renaming it with a unique name
              * */
@@ -526,7 +533,7 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
             @Override
             protected HttpURLConnection createConnection(URL url) throws IOException {
                 HttpsURLConnection urlConnection =
-                        (HttpsURLConnection)url.openConnection();
+                        (HttpsURLConnection) url.openConnection();
                 urlConnection.setHostnameVerifier(Util.getHostname());
 
 
@@ -538,7 +545,6 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
         // queue.add(volleyMultipartRequest);
 
     }
-
 
 
     private String savePicture(byte[] bytes) {
@@ -553,28 +559,28 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
                 Log.e(TAG, "Can't create directory to save image.");
                 return null;
             }
-       //     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
+            //     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
             String photoFile = "";
-        //    String date = dateFormat.format(new Date());
-            String date=Util.getCurrentTimeStamp();
+            //    String date = dateFormat.format(new Date());
+            String date = Util.getCurrentTimeStamp();
             if (flagcapture == 1) {
                 photoFile = Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID();
-                photoFile=photoFile+ "-" + "AscPic-"+testList.getId() + "_"+ date + ".jpg";
+                photoFile = photoFile + "-" + "AscPic-" + testList.getId() + "_" + date + ".jpg";
 
             } else if (flagcapture == 2) {
-                photoFile = Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID() ;
-                photoFile=photoFile+ "-" + "CdPic-"+testList.getId() + "_"+ date + ".jpg";
+                photoFile = Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID();
+                photoFile = photoFile + "-" + "CdPic-" + testList.getId() + "_" + date + ".jpg";
 
             }
 
             filepath = pictureFileDir.getPath() + File.separator + photoFile;
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            saveFile(filepath,bytes);
+            saveFile(filepath, bytes);
             // .setImageURI(photoFile);
             try {
                 ExifInterface exifObject = new ExifInterface(filepath);
                 int orientation = exifObject.getAttributeInt(ExifInterface.TAG_ORIENTATION, 3);
-                Bitmap imageRotate = rotateBitmap(bitmap,8);
+                Bitmap imageRotate = rotateBitmap(bitmap, 8);
 
 
         /*    File pictureFile = new File(filepath);
@@ -583,10 +589,10 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
 
                 //    Bitmap bitmap1=rotateImageIfRequired(bitmap,filepath);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                imageRotate.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                imageRotate.compress(Bitmap.CompressFormat.JPEG, 50, stream);
                 bytes = stream.toByteArray();
                 new File(filepath).delete();
-                saveFile(filepath,bytes);
+                saveFile(filepath, bytes);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -687,7 +693,7 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
 
     private void openFeedbackScreen() {
 
-       String json = Util.getJson(ActivityLastImageCapture.this, testList);
+        String json = Util.getJson(ActivityLastImageCapture.this, testList);
 
         try {
             JSONObject scheduleSettings = Util.getScheduleSettings(json);
@@ -696,10 +702,9 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
 
             if (cf != null) {
                 if (cf.equalsIgnoreCase("0")) {
-                    if(Util.ONLINE) {
-                       gotoCandidateFeedBack();
-                    }
-                    else {
+                    if (Util.ONLINE) {
+                        gotoCandidateFeedBack();
+                    } else {
                         Globalclass.userids = "";
                         Globalclass.lastpicturecandidate = "0";
                         Intent intent = new Intent(ActivityLastImageCapture.this, ActivityThankyou.class);
@@ -712,7 +717,7 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
                 } else if (cf.equalsIgnoreCase("1")) {
                     gotoCandidateFeedBack();
                 } else {
-                   gotoCandidateFeedBack();
+                    gotoCandidateFeedBack();
                 }
             }
         } catch (Exception e) {
@@ -722,13 +727,14 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
     }
 
 
-    void gotoCandidateFeedBack(){
+    void gotoCandidateFeedBack() {
         Intent intent = new Intent(ActivityLastImageCapture.this, ActivityCandidateFeedbackForm.class);
         intent.putExtra(C.TEST, testList);
         intent.putExtra(C.ACTIVE_DETAILS, activeDetails);
         startActivity(intent);
         finish();
     }
+
     @Override
     public void onProgressUpdate(int percentage) {
 
@@ -780,27 +786,35 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
             Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
             bitmap.recycle();
             return bmRotated;
-        }
-        catch (OutOfMemoryError e) {
+        } catch (OutOfMemoryError e) {
             e.printStackTrace();
             return null;
         }
     }
-    void saveFile(String filepath,byte[] bytes){
-        FileOutputStream fos=null;
+
+    void saveFile(String filepath, byte[] bytes) {
+        FileOutputStream fos = null;
         try {
             File pictureFile = new File(filepath);
             fos = new FileOutputStream(pictureFile);
             fos.write(bytes);
             fos.close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
 
         }
     }
 
+    protected Boolean isActivityRunning(Class activityClass) {
+        ActivityManager activityManager = (ActivityManager) getBaseContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
 
+        for (ActivityManager.RunningTaskInfo task : tasks) {
+            if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
+                return true;
+        }
+
+        return false;
+    }
 }

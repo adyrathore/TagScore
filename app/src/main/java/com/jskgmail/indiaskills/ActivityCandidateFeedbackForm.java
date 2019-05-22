@@ -138,10 +138,11 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
             Globalclass.bookmardepractrical = "0";
 
         }
-        // String totalStars =
+
+        String usrID =Globalclass.idcandidate;
         float rating = r1.getRating();
         DatabaseHelper db = new DatabaseHelper(ActivityCandidateFeedbackForm.this);
-        boolean cu = db.insert_feedbackform("N", Globalclass.userids, "23", String.valueOf(rating), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), testList.getId(), "");
+        boolean cu = db.insert_feedbackform("N", usrID, "23", String.valueOf(rating), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), testList.getId(), "");
         if (cu == true) {
             //Toast.makeText(candidatefeedbackform.this,"Save feedback",Toast.LENGTH_LONG).show();
         } else {
@@ -150,7 +151,7 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
 
         float rating2 = r2.getRating();
 
-        boolean cu2 = db.insert_feedbackform("N", Globalclass.userids, "24", String.valueOf(rating2), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), testList.getId(), "");
+        boolean cu2 = db.insert_feedbackform("N", usrID, "24", String.valueOf(rating2), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), testList.getId(), "");
         if (cu2 == true) {
             // Toast.makeText(candidatefeedbackform.this,"Save feedback",Toast.LENGTH_LONG).show();
         } else {
@@ -159,7 +160,7 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
 
         float rating3 = r3.getRating();
 
-        boolean cu3 = db.insert_feedbackform("N", Globalclass.userids, "25", String.valueOf(rating3), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), testList.getId(), "");
+        boolean cu3 = db.insert_feedbackform("N", usrID, "25", String.valueOf(rating3), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), testList.getId(), "");
         if (cu3 == true) {
             // Toast.makeText(candidatefeedbackform.this,"Save feedback",Toast.LENGTH_LONG).show();
         } else {
@@ -168,7 +169,7 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
 
         float rating4 = r4.getRating();
 
-        boolean cu4 = db.insert_feedbackform("N", Globalclass.userids, "26", String.valueOf(rating4), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), testList.getId(), "");
+        boolean cu4 = db.insert_feedbackform("N", usrID, "26", String.valueOf(rating4), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), testList.getId(), "");
         if (cu4 == true) {
             // Toast.makeText(candidatefeedbackform.this,"Save feedback",Toast.LENGTH_LONG).show();
         } else {
@@ -177,7 +178,7 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
 
         float rating5 = r5.getRating();
 
-        boolean cu5 = db.insert_feedbackform("N", Globalclass.userids, "27", String.valueOf(rating5), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), testList.getId(), "");
+        boolean cu5 = db.insert_feedbackform("N", usrID, "27", String.valueOf(rating5), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), testList.getId(), "");
         if (cu == true) {
             //Toast.makeText(candidatefeedbackform.this,"Save feedback",Toast.LENGTH_LONG).show();
         } else {
@@ -329,7 +330,9 @@ public class ActivityCandidateFeedbackForm extends AppCompatActivity {
         Dialog1.setMessage("Saving Details please wait ...");
         Dialog1.show();
         final DatabaseHelper myDb = new DatabaseHelper(ActivityCandidateFeedbackForm.this);
-        final Cursor cursor = myDb.getAllfeedbackdatavaluesforonline(testList.getId(), testList.getScheduleIdPk(), Globalclass.userids);
+        String usrID =Globalclass.idcandidate;
+
+        final Cursor cursor = myDb.getAllfeedbackdatavaluesforonline(testList.getId(), testList.getScheduleIdPk(),usrID );
         if (cursor.getCount() > 0) {
             JSONArray array = cur2Json(cursor);
             JSONObject sd = new JSONObject();

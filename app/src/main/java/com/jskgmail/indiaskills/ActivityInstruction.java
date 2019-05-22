@@ -162,8 +162,8 @@ public class ActivityInstruction extends AppCompatActivity {
                 alertDialogBuilderUserInput.setView(mView);
                 final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.txt_tagid);
                 if (BuildConfig.DEBUG) {
-//                    userInputDialogEditText.setText("express.skills@gmail.com");
                     userInputDialogEditText.setText("mukesh.pandey@indiaskills.edu.in");
+                    userInputDialogEditText.setText("swati.gaur@npglobal.in");
 
                 }
                 alertDialogBuilderUserInput
@@ -519,8 +519,8 @@ public class ActivityInstruction extends AppCompatActivity {
             alertDialogBuilderUserInput.setView(mView);
             final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.txt_tagid);
             if (BuildConfig.DEBUG) {
-//                userInputDialogEditText.setText("express.skills@gmail.com");
                 userInputDialogEditText.setText("mukesh.pandey@indiaskills.edu.in");
+                userInputDialogEditText.setText("swati.gaur@npglobal.in");
 
 
             }

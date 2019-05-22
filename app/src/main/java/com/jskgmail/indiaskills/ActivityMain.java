@@ -68,7 +68,8 @@ public class ActivityMain extends AppCompatActivity {
             etName.setText("mukesh.pandey@indiaskills.edu.in");
             etPassword.setText("ispl@123");
 
-
+            etName.setText("swati.gaur@npglobal.in");
+            etPassword.setText("Admin@123");
         }
         if (BuildConfig.FLAVOR_app.equals(C.MEPSCLogo)) {
             imageView2.setImageResource(R.drawable.mepsc_logo);
