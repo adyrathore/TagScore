@@ -344,6 +344,8 @@ public class TestDetails extends AppCompatActivity {
 
             String candidatecount = String.valueOf(array.get("total_candidate"));
             testtargetcandidate.setText("You have " + candidatecount + " candidates to Assessed");
+            testtargetcandidate.setVisibility(View.GONE);
+            userdetails.setText("View " + candidatecount + " candidates");
 
         } catch (JSONException e) {
             e.printStackTrace();

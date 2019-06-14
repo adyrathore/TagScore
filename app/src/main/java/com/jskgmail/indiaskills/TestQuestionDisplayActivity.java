@@ -180,13 +180,8 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
     TestList testList;
     String activeDetails, sId;
     DatabaseHelper databaseHelper;
-    private SurfaceHolder mHolder;
-    private MediaRecorder mMediaRecorder;
-    private Camera mCamera;
-    private String VIDEO_PATH_NAME, test_duration, reviewquestion = "0", filename, currentbookmark = "", answeroptionnoval = "", currentcount = "1", bookmarkcount = "0", isbookmark = "0", media, answerMedia, questiontype, mediaType, answerMediaType, answeroptionval = "";
     ArrayAdapter<String> spinnerArrayAdapter;
     int total_no_of_quest;
-    private CountDownTimer countDownTimer;
     RadioButton radioButtonO;
     boolean isbookmarkReviewed = false;
     String json = "";
@@ -198,12 +193,46 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
     int imageCount = 0;
     ArrayList<String> imageArray;
     String randomePic, isVideoRecord;
+    private SurfaceHolder mHolder;
+    private MediaRecorder mMediaRecorder;
+    private Camera mCamera;
+    private String VIDEO_PATH_NAME, test_duration, reviewquestion = "0", filename, currentbookmark = "", answeroptionnoval = "", currentcount = "1", bookmarkcount = "0", isbookmark = "0", media, answerMedia, questiontype, mediaType, answerMediaType, answeroptionval = "";
+    private CountDownTimer countDownTimer;
     private String moveToPrev;
     private String fixedTime;
     private String timeFrequency = "";
     private Timer timer;
     private String submitWithoutAttemptAll;
     private Dialog progressDialogUp;
+
+    private String rangeFlag = "1";
+    private HashMap<String, String> hashMap;
+
+
+    private static byte[] readBytesFromFile(String filePath) {
+        FileInputStream fileInputStream = null;
+        byte[] bytesArray = null;
+        try {
+            File file = new File(filePath);
+            bytesArray = new byte[(int) file.length()];
+
+            //read file into bytes[]
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bytesArray);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return bytesArray;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,7 +241,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
         ButterKnife.bind(this);
 
-
+        hashMap = new HashMap<>();
         Drawable spinnerDrawable = spnLanguage.getBackground().getConstantState().newDrawable();
 
         spinnerDrawable.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
@@ -362,7 +391,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         }
     }
 
-
     void setVideoLayout() {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -379,14 +407,14 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 //                if (Globalclass.countlanguage.equalsIgnoreCase("0")) {
-                    if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
+                if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
 //                        if (Globalclass.hindipresent.equalsIgnoreCase("1")) {
 //                            spnLanguage.setSelection(spinnerArrayAdapter.getPosition("Hindi"));
 //                        } else {
 //                            spnLanguage.setSelection(spinnerArrayAdapter.getPosition("English"));
 //                        }
-                        Globalclass.countlanguage = "1";
-                    }
+                    Globalclass.countlanguage = "1";
+                }
 //                }
                 String strval = spnLanguage.getSelectedItem().toString();
                 if (strval.equalsIgnoreCase("English")) {
@@ -427,7 +455,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         });
 
     }
-
 
     public boolean getlanguagevalues(String values) {
         Boolean success = false;
@@ -751,41 +778,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
     }
 
-    class savinganswerdetails extends AsyncTask<Void, Void, String> {
-        ProgressDialog pd;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            try {
-                pd = new ProgressDialog(TestQuestionDisplayActivity.this);
-                pd.setMessage("Please wait...");
-                pd.setCancelable(false);
-                pd.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            savesetails();
-            return "";
-        }
-
-        @Override
-        protected void onPostExecute(String aVoid) {
-            super.onPostExecute(aVoid);
-            try {
-                if (pd != null && pd.isShowing()) {
-                    pd.dismiss();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public void savesetails() {
 
         try {
@@ -859,12 +851,12 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 if (activeDetails.equalsIgnoreCase("0")) {
                     succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
                 } else {
+
                     String rangemark = "";
-                    String strquestion[] = answeroptionval.split(",");
-                    for (int i = 0; i < strquestion.length; i++) {
-                        rangemark = "100" + "," + rangemark;
+                    for (String key : answeroptionval.split(",")) {
+                        rangemark = rangemark + hashMap.get(key) + ",";
                     }
-                    succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "rangemark", "1", activeDetails, answeroptionnoval);
+                    succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, rangeFlag, activeDetails, answeroptionnoval);
 
                 }
                 if (submitWithoutAttemptAll.equals(C.YES)) {
@@ -993,12 +985,12 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 if (activeDetails.equalsIgnoreCase("0")) {
                     success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "{100}", "0", activeDetails, answeroptionnoval);
                 } else {
+
                     String rangemark = "";
-                    String strquestion[] = answeroptionval.split(",");
-                    for (int i = 0; i < strquestion.length; i++) {
-                        rangemark = "100" + "," + rangemark;
+                    for (String key : answeroptionval.split(",")) {
+                        rangemark = rangemark + hashMap.get(key) + ",";
                     }
-                    success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, "1", activeDetails, answeroptionnoval);
+                    success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, rangeFlag, activeDetails, answeroptionnoval);
                 }
                 if (submitWithoutAttemptAll.equals(C.YES)) {
                     success = true;
@@ -1016,7 +1008,8 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                                     if (successval == true) {
 
                                         setConstants();
-                                        openPhotoCaptureActivity();
+
+                                        uploadBitmap(VIDEO_PATH_NAME, sId, filename, sId, "video", filename);
 
                                     } else {
                                         showMessage("", "Unable to submit test");
@@ -1197,178 +1190,32 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                     Globalclass.lastpicturecandidate = "1";
                     currentbookmark = "0";
                     currentcount = "1";
-                    gotoNextQuestionForPractical();
+                    if (isSubmit)
+                        openPhotoCaptureActivity();
+                    else
+                        gotoNextQuestionForPractical();
                 }
 
                 @Override
                 public void onFailure(Call<UploadZipResponse> call, Throwable t) {
                     progressDialogUp.dismiss();
                     gotoNextQuestionForPractical();
+                    if (isSubmit)
+                        openPhotoCaptureActivity();
+                    else
+                        gotoNextQuestionForPractical();
+
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
             progressDialogUp.dismiss();
-            gotoNextQuestionForPractical();
+            if (isSubmit)
+                openPhotoCaptureActivity();
+            else
+                gotoNextQuestionForPractical();
         }
         //finally performing the call
-    }
-
-    /*
-        private void uploadBitmap(final String imageurlval, final String tagidval, final String nameimageval, final String targetid, final String imagetypeval, String nameimageorg) {
-            try {
-                final ProgressDialog Dialog1 = new ProgressDialog(TestQuestionDisplayActivity.this);
-                Dialog1.setMessage("Uploding Video Please wait...");
-                try {
-                    if(Dialog1!=null )
-                    Dialog1.show();
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
-                //getting the tag from the edittext
-                //final String tags = editTextTags.getText().toString().trim();
-                String url = C.API_UPLOAD_VIDEO_AND_PHOTO;
-                //our custom volley request
-                VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, url,
-                        new Response.Listener<NetworkResponse>() {
-                            @Override
-                            public void onResponse(NetworkResponse response) {
-                                //   JSONObject obj = new JSONObject(new String(response.data));
-                                try {
-                                    if (Dialog1 != null && Dialog1.isShowing()) {
-                                        Dialog1.dismiss();
-                                    }
-                                }
-                                catch (Exception e){
-                                    e.printStackTrace();
-                                }
-                                //  mMediaRecorder.reset();
-                                //   mCamera.release();
-                                currentbookmark = "0";
-                                isbookmark = "";
-                                reviewquestion = "";
-                                isbookmark = "0";
-                                setupAlarmManagerstop();
-                                Globalclass.lastpicturecandidate = "1";
-                                //  CameraManager cr = new CameraManager(TestQuestion.this);
-                                //  cr.takePhoto();
-                                currentbookmark = "0";
-                                currentcount = "1";
-                                //   Intent intent = new Intent(TestQuestion.this, candidatefeedbackform.class);
-                                //  startActivity(intent);
-                                //  finish();
-                                //Globalclass.evidencecapture = "hola";
-                                // finish();
-                                // showMessage("","Image Uploded...");
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                try {
-                                    if (Dialog1 != null && Dialog1.isShowing()) {
-                                        Dialog1.dismiss();
-                                    }
-                                }
-                                catch (Exception e){
-                                    e.printStackTrace();
-                                }
-                                //  uploadBitmap(VIDEO_PATH_NAME, sId, filename, sId, "video", filename);
-                                //   Toast.makeText(TestQuestionDisplayActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }) {
-                    @Override
-                    public Map<String, String> getHeaders() {
-                        HashMap<String, String> headers = new HashMap<>();
-                        String credentials = "tagusp:t@g$c0re";
-                        String auth = "Basic" + " " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                        //  headers.put("Content-Type", "application/json");
-                        headers.put("Authorization", auth);
-                        return headers;
-                    }
-
-                    */
-    /*
-     * If you want to add more parameters with the image
-     * you can do it here
-     * here we have only one parameter with the image
-     * which is tags
-     * *//*
-
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("userId", SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getUserID());
-                    params.put("api_key", SharedPreference.getInstance(TestQuestionDisplayActivity.this).getUser(C.LOGIN_USER).getApiKey());
-                    params.put("testID", testList.getId());
-                    params.put("uniqueID", testList.getUniqueID());
-                    params.put("picType", imagetypeval);
-                    params.put("candidate_id", tagidval);
-                    params.put("version", "m");
-                    params.put("target_dir", targetid);
-                    params.put("filename", nameimageval);
-                    // params.put("imageHash", encodedImage);
-                    // params.put("imageHash", encodedImage);
-                    return params;
-                }
-
-                */
-    /*
-     * Here we are passing image by renaming it with a unique name
-     * *//*
-
-                @Override
-                protected Map<String, DataPart> getByteData() {
-                    Map<String, DataPart> params = new HashMap<>();
-                    long imagename = System.currentTimeMillis();
-                    params.put("imageHash", new DataPart(nameimageval, readBytesFromFile(imageurlval)));
-                    return params;
-                }
-            };
-            //  Volley.newRequestQueue(this,new HurlStack(null, new ClientSSLSocketFactory(300000).getSocketFactory())).add(volleyMultipartRequest);
-            RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStack() {
-
-
-                @Override
-                protected HttpURLConnection createConnection(URL url) throws IOException {
-                    HttpsURLConnection urlConnection =
-                            (HttpsURLConnection)url.openConnection();
-                    urlConnection.setHostnameVerifier(Util.getHostname());
-
-
-                    return urlConnection;
-                }
-            });
-            requestQueue.add(volleyMultipartRequest);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-*/
-    private static byte[] readBytesFromFile(String filePath) {
-        FileInputStream fileInputStream = null;
-        byte[] bytesArray = null;
-        try {
-            File file = new File(filePath);
-            bytesArray = new byte[(int) file.length()];
-
-            //read file into bytes[]
-            fileInputStream = new FileInputStream(file);
-            fileInputStream.read(bytesArray);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return bytesArray;
     }
 
     void removeViews() {
@@ -1417,7 +1264,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         bookmarkcount = "0";
     }
 
-
     private void openPhotoCaptureActivity() {
 
         try {
@@ -1447,52 +1293,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
             finish();
         }
 
-    }
-
-    class LongOperationgetquestiondetails extends AsyncTask<Void, Void, String> {
-
-        ProgressDialog pro;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            try {
-                tvQuestionName.setVisibility(View.GONE);
-                pro = new ProgressDialog(TestQuestionDisplayActivity.this);
-                pro.setMessage("Please wait...");
-                pro.setCancelable(false);
-                pro.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            getquestiondetails();
-            return "";
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-                if (pro != null && pro.isShowing()) {
-                    pro.dismiss();
-                }
-                if (Globalclass.guestioncount == 0 && !runningbookmark) {
-                    btnPriviousquestion.setEnabled(false);
-                    btnPriviousquestion.setVisibility(View.GONE);
-                } else if (!runningbookmark) {
-                    btnPriviousquestion.setEnabled(true);
-                    btnPriviousquestion.setVisibility(View.VISIBLE);
-                }
-                tvQuestionName.setVisibility(View.VISIBLE);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     void getTestJson() {
@@ -1746,6 +1546,14 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                                 isbookmark = questiongiven.getString(5); // bootest_detailskmark count
                                 currentcount = questiongiven.getString(6);
                                 bookmarkcount = questiongiven.getString(5);// bookmark count
+                                String rangemark = "";
+                                rangemark = questiongiven.getString(12);
+                                int i = 0;
+                                for (String key : answeroptionval.split(",")) {
+                                    hashMap.put(key, rangemark.split(",")[i]);
+                                    i++;
+                                }
+
                                 if (activeDetails.equalsIgnoreCase("1")) {
                                     answeroptionnoval = questiongiven.getString(15); //optionnoval for practical No
                                 }
@@ -1764,7 +1572,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
                             JSONArray Questionanswer = jsonobj_2_answer.getJSONArray("answers");
                             String ids;
-
 
                             if (activeDetails.equalsIgnoreCase("0") && questiontype.equals("4")) {
                                 editTextType4 = new EditText(TestQuestionDisplayActivity.this);
@@ -1978,121 +1785,218 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                                     }
 
                                 } else {
-                                    // String rangeval = jsonobj_2_answerval.getString("range_marking").toString();
+                                    rangeFlag = getScheduleSettings().getString("range_marking").toString();
+                                    if ("3".equalsIgnoreCase(rangeFlag)) {
+                                        final TextView textView = new TextView(TestQuestionDisplayActivity.this);
+                                        textView.setId(Integer.parseInt(ids));
+                                        textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                        textView.setText(answer);
+                                        textView.setTextColor(Color.BLACK);
+                                        final TextView textView1 = new TextView(TestQuestionDisplayActivity.this);
+                                        textView1.setText(ids);
+                                        textView1.setVisibility(View.GONE);
 
-                                    final TextView textView = new TextView(TestQuestionDisplayActivity.this);
-                                    textView.setId(Integer.parseInt(ids));
-                                    textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                    textView.setText(answer);
-                                    textView.setTextColor(Color.BLACK);
-                                    final TextView textView1 = new TextView(TestQuestionDisplayActivity.this);
-                                    textView1.setText(ids);
-                                    textView1.setVisibility(View.GONE);
-                                    final RadioButton radioButton = new RadioButton(TestQuestionDisplayActivity.this);
-                                    if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
-                                        radioButton.setText(R.string.yeshnval);
-                                    } else {
-                                        radioButton.setText("Yes");
-                                    }
-                                    radioButton.setId(Integer.parseInt("1"));
-                                    radioButton.setTextColor(Color.BLACK);
-                                    final RadioButton radioButton1 = new RadioButton(TestQuestionDisplayActivity.this);
-                                    if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
-                                        radioButton1.setText(R.string.nohnval);
-                                    } else {
-                                        radioButton1.setText("no");
-                                    }
-                                    radioButton1.setId(Integer.parseInt("2"));
-                                    radioButton1.setTextColor(Color.BLACK);
-                                    String strquestion[] = answeroptionval.split(",");
-                                    for (int i = 0; i < strquestion.length; i++) {
-                                        if (ids.equalsIgnoreCase(strquestion[i])) {
-                                            radioButton.setChecked(true);
-                                            radioButton1.setChecked(false);
-                                        }
-                                    }
+                                        final RadioButton radioButton = new RadioButton(TestQuestionDisplayActivity.this);
+                                        radioButton.setText("Excellent ");
+                                        radioButton.setId(Integer.parseInt("1"));
+                                        radioButton.setTextColor(Color.BLACK);
 
-                                    String strnooption[] = answeroptionnoval.split(",");
-                                    for (int k = 0; k < strnooption.length; k++) {
-                                        if (ids.equalsIgnoreCase(strnooption[k]))  //answeroptionval = str[i];
-                                        {
-                                            radioButton1.setChecked(true);
-                                            radioButton.setChecked(false);
-                                        }
-                                    }
-                                    radioButton1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                        @Override
-                                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                            if (isChecked == true) {
-                                                String id = String.valueOf(textView1.getText().toString());
-                                                answeroptionnoval = id + "," + answeroptionnoval;
-                                                radioButton.setChecked(false);
+                                        final RadioButton radioButton1 = new RadioButton(TestQuestionDisplayActivity.this);
+                                        radioButton1.setText("Good");
+                                        radioButton1.setId(Integer.parseInt("2"));
+                                        radioButton1.setTextColor(Color.BLACK);
+
+                                        final RadioButton radioButton2 = new RadioButton(TestQuestionDisplayActivity.this);
+                                        radioButton2.setText("Satisfactory");
+                                        radioButton2.setId(Integer.parseInt("3"));
+                                        radioButton2.setTextColor(Color.BLACK);
+
+
+                                        final RadioButton radioButton3 = new RadioButton(TestQuestionDisplayActivity.this);
+                                        radioButton3.setText("Poor");
+                                        radioButton3.setId(Integer.parseInt("4"));
+                                        radioButton3.setTextColor(Color.BLACK);
+
+                                        if (hashMap.get(ids) != null) {
+                                            if (hashMap.get(ids).equals("100")) {
+                                                radioButton.setChecked(true);
+                                            } else if (hashMap.get(ids).equals("75")) {
+                                                radioButton1.setChecked(true);
+                                            } else if (hashMap.get(ids).equals("50")) {
+                                                radioButton2.setChecked(true);
+                                            } else if (hashMap.get(ids).equals("25")) {
+                                                radioButton3.setChecked(true);
                                             }
-                                            if (isChecked == false) {
-                                                String id = String.valueOf(textView1.getText().toString());
-                                                String str[] = answeroptionnoval.split(id + ",");
-                                                if (str.length == 0) {
-                                                    answeroptionnoval = "";
-                                                } else {
-                                                    for (int i = 0; i <= str.length - 1; i++) {
-                                                        answeroptionnoval = str[i];
-                                                    }
-                                                }
-                                            }
-                                            insertLogHistory(testquestionid.getText().toString(), C.Event_Answer_Change, Util.getCurrentDateTime(), testList.getId(), activeDetails, Globalclass.idcandidate);
-
                                         }
-                                    });
-                                    radioButton.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                    radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                        @Override
-                                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                            if (isChecked == true) {
-                                                radioButton1.setChecked(false);
+
+
+                                        RadioGroup radioGroup = new RadioGroup(TestQuestionDisplayActivity.this);
+                                        radioGroup.setOrientation(RadioGroup.VERTICAL);
+                                        radioGroup.setTag(jj);
+                                        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                                            @Override
+                                            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
                                                 String idval = String.valueOf(textView1.getText().toString());
-                                                answeroptionval = idval + "," + answeroptionval;
-                                            }
-                                            if (isChecked == false) {
-                                                String id = String.valueOf(textView1.getText().toString());
-                                                String str[] = answeroptionval.split(id + ",");
-                                                if (str.length == 0) {
-                                                    answeroptionval = "";
-                                                } else {
-                                                    for (int i = 0; i <= str.length - 1; i++) {
-                                                        answeroptionval = str[i];
-                                                    }
+
+                                                if (!answeroptionval.contains(idval))
+                                                    answeroptionval = idval + "," + answeroptionval;
+                                                String val = "";
+                                                if (i == 1) {
+                                                    val = "100";
+                                                } else if (i == 2) {
+                                                    val = "75";
+                                                } else if (i == 3) {
+                                                    val = "50";
+                                                } else if (i == 4) {
+                                                    val = "25";
                                                 }
+
+                                                hashMap.put(idval, val);
+
+                                                insertLogHistory(testquestionid.getText().toString(), C.Event_Answer_Change, Util.getCurrentDateTime(), testList.getId(), activeDetails, Globalclass.idcandidate);
+
                                             }
-                                            insertLogHistory(testquestionid.getText().toString(), C.Event_Answer_Change, Util.getCurrentDateTime(), testList.getId(), activeDetails, Globalclass.idcandidate);
+                                        });
+
+                                        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
+                                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                LinearLayout.LayoutParams.WRAP_CONTENT
+
+                                        );
+
+
+                                        if (LLOptionvaluesView != null) {
+                                            LLOptionvaluesView.addView(textView);
+                                            LLOptionvaluesView.addView(textView1);
+
+                                            //     LLOptionvaluesView.addView(imageView);
+                                            setAnswerMedia(answerMediaType, answerMedia, LLOptionvaluesView, ids);
+
+                                            LLOptionvaluesView.addView(radioGroup, p);
 
                                         }
-                                    });
+
+                                        radioGroup.addView(radioButton, p);
+                                        radioGroup.addView(radioButton1, p);
+                                        radioGroup.addView(radioButton2, p);
+                                        radioGroup.addView(radioButton3, p);
+
+                                    } else {
+                                        final TextView textView = new TextView(TestQuestionDisplayActivity.this);
+                                        textView.setId(Integer.parseInt(ids));
+                                        textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                        textView.setText(answer);
+                                        textView.setTextColor(Color.BLACK);
+                                        final TextView textView1 = new TextView(TestQuestionDisplayActivity.this);
+                                        textView1.setText(ids);
+                                        textView1.setVisibility(View.GONE);
+                                        final RadioButton radioButton = new RadioButton(TestQuestionDisplayActivity.this);
+                                        if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
+                                            radioButton.setText(R.string.yeshnval);
+                                        } else {
+                                            radioButton.setText("Yes");
+                                        }
+                                        radioButton.setId(Integer.parseInt("1"));
+                                        radioButton.setTextColor(Color.BLACK);
+                                        final RadioButton radioButton1 = new RadioButton(TestQuestionDisplayActivity.this);
+                                        if (Globalclass.spinnerstringlang.equalsIgnoreCase("hn")) {
+                                            radioButton1.setText(R.string.nohnval);
+                                        } else {
+                                            radioButton1.setText("no");
+                                        }
+                                        radioButton1.setId(Integer.parseInt("2"));
+                                        radioButton1.setTextColor(Color.BLACK);
+                                        String strquestion[] = answeroptionval.split(",");
+                                        for (int i = 0; i < strquestion.length; i++) {
+                                            if (ids.equalsIgnoreCase(strquestion[i])) {
+                                                radioButton.setChecked(true);
+                                                radioButton1.setChecked(false);
+                                            }
+                                        }
+
+                                        String strnooption[] = answeroptionnoval.split(",");
+                                        for (int k = 0; k < strnooption.length; k++) {
+                                            if (ids.equalsIgnoreCase(strnooption[k]))  //answeroptionval = str[i];
+                                            {
+                                                radioButton.setChecked(false);
+                                                radioButton1.setChecked(true);
+                                            }
+                                        }
+                                        radioButton1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                            @Override
+                                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                                if (isChecked == true) {
+                                                    String id = String.valueOf(textView1.getText().toString());
+                                                    answeroptionnoval = id + "," + answeroptionnoval;
+                                                    radioButton.setChecked(false);
+                                                }
+                                                if (isChecked == false) {
+                                                    String id = String.valueOf(textView1.getText().toString());
+                                                    String str[] = answeroptionnoval.split(id + ",");
+                                                    if (str.length == 0) {
+                                                        answeroptionnoval = "";
+                                                    } else {
+                                                        for (int i = 0; i <= str.length - 1; i++) {
+                                                            answeroptionnoval = str[i];
+                                                        }
+                                                    }
+                                                }
+                                                insertLogHistory(testquestionid.getText().toString(), C.Event_Answer_Change, Util.getCurrentDateTime(), testList.getId(), activeDetails, Globalclass.idcandidate);
+
+                                            }
+                                        });
+                                        radioButton.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                        radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                            @Override
+                                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                                if (isChecked == true) {
+                                                    radioButton1.setChecked(false);
+                                                    String idval = String.valueOf(textView1.getText().toString());
+                                                    answeroptionval = idval + "," + answeroptionval;
+                                                }
+                                                if (isChecked == false) {
+                                                    String id = String.valueOf(textView1.getText().toString());
+                                                    String str[] = answeroptionval.split(id + ",");
+                                                    if (str.length == 0) {
+                                                        answeroptionval = "";
+                                                    } else {
+                                                        for (int i = 0; i <= str.length - 1; i++) {
+                                                            answeroptionval = str[i];
+                                                        }
+                                                    }
+                                                }
+                                                insertLogHistory(testquestionid.getText().toString(), C.Event_Answer_Change, Util.getCurrentDateTime(), testList.getId(), activeDetails, Globalclass.idcandidate);
+
+                                            }
+                                        });
                                   /*  ImageView imageView = new ImageView(TestQuestionDisplayActivity.this);
                                     imageView.setId(Integer.parseInt(ids));
                                     Util.loadImage(hash, imageView);*/
-                                    RadioGroup radioGroup = new RadioGroup(TestQuestionDisplayActivity.this);
-                                    radioGroup.setOrientation(RadioGroup.HORIZONTAL);
+                                        RadioGroup radioGroup = new RadioGroup(TestQuestionDisplayActivity.this);
+                                        radioGroup.setOrientation(RadioGroup.HORIZONTAL);
 
-                                    LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
-                                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                                            LinearLayout.LayoutParams.WRAP_CONTENT
+                                        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
+                                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                LinearLayout.LayoutParams.WRAP_CONTENT
 
-                                    );
+                                        );
 
-                                    if (LLOptionvaluesView != null) {
-                                        LLOptionvaluesView.addView(textView);
-                                        LLOptionvaluesView.addView(textView1);
+                                        if (LLOptionvaluesView != null) {
+                                            LLOptionvaluesView.addView(textView);
+                                            LLOptionvaluesView.addView(textView1);
 
-                                        //     LLOptionvaluesView.addView(imageView);
-                                        setAnswerMedia(answerMediaType, answerMedia, LLOptionvaluesView, ids);
+                                            //     LLOptionvaluesView.addView(imageView);
+                                            setAnswerMedia(answerMediaType, answerMedia, LLOptionvaluesView, ids);
 
-                                        LLOptionvaluesView.addView(radioGroup, p);
+                                            LLOptionvaluesView.addView(radioGroup, p);
+
+                                        }
+
+                                        radioGroup.addView(radioButton, p);
+                                        radioGroup.addView(radioButton1, p);
 
                                     }
-
-                                    radioGroup.addView(radioButton, p);
-                                    radioGroup.addView(radioButton1, p);
-
                                 }
                             }
 
@@ -2148,7 +2052,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         }
     }
 
-
     void showDialog() {
         progressDialog = Util.getProgressDialog(this, R.string.loading);
         if (progressDialog != null) {
@@ -2161,7 +2064,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
             progressDialog.dismiss();
         }
     }
-
 
     private void initRecorder(Surface surface) throws Exception {
         if (isVideoRecord.equals("1")) {
@@ -2187,7 +2089,7 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 mMediaRecorder.setVideoFrameRate(30);
                 //   mMediaRecorder.setOrientationHint(180);
                 mMediaRecorder.setVideoSize(640, 480);
-                mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+                mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 
                 mMediaRecorder.setOutputFile(VIDEO_PATH_NAME);
                 // getOutputMediaFile(MEDIA_TYPE_VIDEO);
@@ -2391,11 +2293,10 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                     succ = db.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, isbookmark, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, "100", "0", activeDetails, answeroptionnoval);
                 } else {
                     String rangemark = "";
-                    String strquestion[] = answeroptionval.split(",");
-                    for (int i = 0; i < strquestion.length; i++) {
-                        rangemark = "100" + "," + rangemark;
+                    for (String key : answeroptionval.split(",")) {
+                        rangemark = rangemark + hashMap.get(key) + ",";
                     }
-                    succ = db.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, isbookmark, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, "1", activeDetails, answeroptionnoval);
+                    succ = db.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, isbookmark, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, rangeFlag, activeDetails, answeroptionnoval);
                 }
                 if (succ == true) {
                     String str = btnReviewBookmark.getText().toString();
@@ -2485,9 +2386,8 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
     }
 
     void insertLogHistory(String Questionid, String event, String timestamp, String testid, String activedetails, String userID) {
-        databaseHelper.insertLogHistory(Questionid, event, System.currentTimeMillis()+"", testid, activedetails, Globalclass.idcandidate);
+        databaseHelper.insertLogHistory(Questionid, event, System.currentTimeMillis() + "", testid, activedetails, Globalclass.idcandidate);
     }
-
 
     @Override
     protected void onPause() {
@@ -2538,7 +2438,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
         setupAlarmManagerstop();
     }
 
-
     void setAnswerMedia(String amt, String am, LinearLayout LLView, String ids) {
         if (amt != null && !amt.equals("")) {
             String mt[] = amt.split(",");
@@ -2587,7 +2486,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
     }
 
-
     String getJson() {
         if (Util.ONLINE) {
             json = SharedPreference.getInstance(TestQuestionDisplayActivity.this).getString(C.ONLINE_TEST_LIST);
@@ -2616,7 +2514,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
     }
 
-
     JSONObject getScheduleSettings() {
 
         try {
@@ -2635,6 +2532,87 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    class savinganswerdetails extends AsyncTask<Void, Void, String> {
+        ProgressDialog pd;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            try {
+                pd = new ProgressDialog(TestQuestionDisplayActivity.this);
+                pd.setMessage("Please wait...");
+                pd.setCancelable(false);
+                pd.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            savesetails();
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String aVoid) {
+            super.onPostExecute(aVoid);
+            try {
+                if (pd != null && pd.isShowing()) {
+                    pd.dismiss();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class LongOperationgetquestiondetails extends AsyncTask<Void, Void, String> {
+
+        ProgressDialog pro;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            try {
+                tvQuestionName.setVisibility(View.GONE);
+                pro = new ProgressDialog(TestQuestionDisplayActivity.this);
+                pro.setMessage("Please wait...");
+                pro.setCancelable(false);
+                pro.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            getquestiondetails();
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                if (pro != null && pro.isShowing()) {
+                    pro.dismiss();
+                }
+                if (Globalclass.guestioncount == 0 && !runningbookmark) {
+                    btnPriviousquestion.setEnabled(false);
+                    btnPriviousquestion.setVisibility(View.GONE);
+                } else if (!runningbookmark) {
+                    btnPriviousquestion.setEnabled(true);
+                    btnPriviousquestion.setVisibility(View.VISIBLE);
+                }
+                tvQuestionName.setVisibility(View.VISIBLE);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

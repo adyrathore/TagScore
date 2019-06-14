@@ -565,7 +565,7 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
             String date = Util.getCurrentTimeStamp();
             if (flagcapture == 1) {
                 photoFile = Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID();
-                photoFile = photoFile + "-" + "AscPic-" + testList.getId() + "_" + date + ".jpg";
+                photoFile=photoFile+"-"+Globalclass.idcandidate + "-" + "rmPic-" +testList.getId()+"_"+ date + ".jpg";
 
             } else if (flagcapture == 2) {
                 photoFile = Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID();
@@ -603,8 +603,8 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
             //   String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
             if (Util.ONLINE) {
                 if (flagcapture == 1) {
-//                    uploadBitmap(filepath, Globalclass.schduleid, "AscPic-" + photoFile, Globalclass.schduleid, "AscPic-", photoFile);
-                    uploadImage(filepath, testList.getScheduleIdPk(), "AscPic-" + photoFile, testList.getScheduleIdPk(), "AscPic-", photoFile);
+//                    uploadBitmap(filepath, Globalclass.schduleid, "rmPic-" + photoFile, Globalclass.schduleid, "rmPic-", photoFile);
+                    uploadImage(filepath, testList.getScheduleIdPk(), "rmPic-" + photoFile, testList.getScheduleIdPk(), "rmPic-", photoFile);
 
                 } else if (flagcapture == 2) {
                     uploadImage(pictureFile.getPath(), Globalclass.idcandidate, photoFile, testList.getScheduleIdPk() + "/" + Globalclass.idcandidate, "CdPic", photoFile);
@@ -616,7 +616,7 @@ public class ActivityLastImageCapture extends AppCompatActivity implements Progr
                 DatabaseHelper db = new DatabaseHelper(ActivityLastImageCapture.this);
                 boolean success = false;
                 if (flagcapture == 1) {
-                    success = db.insert_imagesval("AscPic-", "non", photoFile, testList.getId(), filepath, Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID());
+                    success = db.insert_imagesval("rmPic-", "non", photoFile, testList.getId(), filepath, Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID(), Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID());
                 } else if (flagcapture == 2) {
                     success = db.insert_imagesval("CdPic", "non", photoFile, testList.getId(), filepath, Globalclass.idcandidate, Util.ONLINE ? testList.getScheduleIdPk() : testList.getUniqueID());
                 }

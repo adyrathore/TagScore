@@ -109,19 +109,21 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="12dp"
                         android:orientation="vertical"
+                        android:visibility="gone"
                         tools:layout_editor_absoluteX="12dp"
                         tools:layout_editor_absoluteY="12dp"
 
                         >
 
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="14dp"
                             android:layout_marginLeft="16dp"
                             android:layout_weight="2"
                             android:text="@string/AboutthisTest"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="16dp" />
+                            android:textSize="16dp"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/targetdescription"
