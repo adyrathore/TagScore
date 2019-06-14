@@ -1829,7 +1829,6 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                                             }
                                         }
 
-
                                         RadioGroup radioGroup = new RadioGroup(TestQuestionDisplayActivity.this);
                                         radioGroup.setOrientation(RadioGroup.VERTICAL);
                                         radioGroup.setTag(jj);
