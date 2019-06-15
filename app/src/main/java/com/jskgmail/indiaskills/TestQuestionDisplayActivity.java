@@ -854,8 +854,10 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
                     String rangemark = "";
                     for (String key : answeroptionval.split(",")) {
-                        rangemark = rangemark + hashMap.get(key) + ",";
-                    }
+                        if ("3".equals(rangeFlag))
+                            rangemark = rangemark + hashMap.get(key) + ",";
+                        else
+                            rangemark = rangemark + "100,";                    }
                     succ = databaseHelper.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, rangeFlag, activeDetails, answeroptionnoval);
 
                 }
@@ -988,8 +990,10 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
 
                     String rangemark = "";
                     for (String key : answeroptionval.split(",")) {
-                        rangemark = rangemark + hashMap.get(key) + ",";
-                    }
+                        if ("3".equals(rangeFlag))
+                            rangemark = rangemark + hashMap.get(key) + ",";
+                        else
+                            rangemark = rangemark + "100,";                    }
                     success = databaseHelper.insert_useranswer(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, bookmarkcount, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, rangeFlag, activeDetails, answeroptionnoval);
                 }
                 if (submitWithoutAttemptAll.equals(C.YES)) {
@@ -1797,23 +1801,23 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                                         textView1.setVisibility(View.GONE);
 
                                         final RadioButton radioButton = new RadioButton(TestQuestionDisplayActivity.this);
-                                        radioButton.setText("Excellent ");
+                                        radioButton.setText(Globalclass.spinnerstringlang.equalsIgnoreCase("hn")?"अति उत्तम":"Excellent ");
                                         radioButton.setId(Integer.parseInt("1"));
                                         radioButton.setTextColor(Color.BLACK);
 
                                         final RadioButton radioButton1 = new RadioButton(TestQuestionDisplayActivity.this);
-                                        radioButton1.setText("Good");
+                                        radioButton1.setText(Globalclass.spinnerstringlang.equalsIgnoreCase("hn")?"अच्छा":"Good");
                                         radioButton1.setId(Integer.parseInt("2"));
                                         radioButton1.setTextColor(Color.BLACK);
 
                                         final RadioButton radioButton2 = new RadioButton(TestQuestionDisplayActivity.this);
-                                        radioButton2.setText("Satisfactory");
+                                        radioButton2.setText(Globalclass.spinnerstringlang.equalsIgnoreCase("hn")?"संतोषजनक":"Satisfactory");
                                         radioButton2.setId(Integer.parseInt("3"));
                                         radioButton2.setTextColor(Color.BLACK);
 
 
                                         final RadioButton radioButton3 = new RadioButton(TestQuestionDisplayActivity.this);
-                                        radioButton3.setText("Poor");
+                                        radioButton3.setText(Globalclass.spinnerstringlang.equalsIgnoreCase("hn")?"खराब ":"Poor");
                                         radioButton3.setId(Integer.parseInt("4"));
                                         radioButton3.setTextColor(Color.BLACK);
 
@@ -2293,8 +2297,13 @@ public class TestQuestionDisplayActivity extends AppCompatActivity implements Su
                 } else {
                     String rangemark = "";
                     for (String key : answeroptionval.split(",")) {
-                        rangemark = rangemark + hashMap.get(key) + ",";
+                        if ("3".equals(rangeFlag))
+                            rangemark = rangemark + hashMap.get(key) + ",";
+                        else
+                            rangemark = rangemark + "100,";
+
                     }
+
                     succ = db.update_record_question_answer_given(testList.getId(), strid, answeroptionval, Globalclass.userids, strdate, isbookmark, currentcount, String.valueOf(Globalclass.guestioncount), sId, bookmarkflag, rangemark, rangeFlag, activeDetails, answeroptionnoval);
                 }
                 if (succ == true) {
